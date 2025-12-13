@@ -155,11 +155,16 @@ install_rfrtools_repo() {
 
   # if rfrtools is not bypassed then install it
   if [[ $install_rfrtools = "true" ]]; then
-    curl --silent -kL https://raw.githubusercontent.com/DexterInd/RFR_Tools/$selectedbranch/scripts/install_tools.sh > $PIHOME/.tmp_rfrtools.sh
+    script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    dexterind_root="$(cd "$script_dir/../.." && pwd)"
+    rfrtools_script="$dexterind_root/RFR_Tools/scripts/install_tools.sh"
+    if [[ ! -f "$rfrtools_script" ]]; then
+      echo "RFR_Tools install script not found at $rfrtools_script. Exiting."
+      exit 7
+    fi
     echo "Installing RFR_Tools. This might take a while.."
-    bash $PIHOME/.tmp_rfrtools.sh ${rfrtools_options[@]} # > /dev/null
+    bash "$rfrtools_script" "${rfrtools_options[@]}"
     ret_val=$?
-    rm $PIHOME/.tmp_rfrtools.sh
     if [[ $ret_val -ne 0 ]]; then
       echo "RFR_Tools failed installing with exit code $ret_val. Exiting."
       exit 7

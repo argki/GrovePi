@@ -9,14 +9,14 @@ df -h
 echo ""
 echo Check for dependencies #>> error_log.txt
 echo ======================
-dpkg-query -W -f='${Package} ${Version} ${Status}\n' python #>> error_log.txt
-dpkg-query -W -f='${Package} ${Version} ${Status}\n' python-pip #>> error_log.txt
+dpkg-query -W -f='${Package} ${Version} ${Status}\n' python3 #>> error_log.txt
+dpkg-query -W -f='${Package} ${Version} ${Status}\n' python3-pip #>> error_log.txt
 dpkg-query -W -f='${Package} ${Version} ${Status}\n' git #>> error_log.txt
 dpkg-query -W -f='${Package} ${Version} ${Status}\n' libi2c-dev #>> error_log.txt
-dpkg-query -W -f='${Package} ${Version} ${Status}\n' python-serial #>> error_log.txt
-dpkg-query -W -f='${Package} ${Version} ${Status}\n' python-rpi.gpio #>> error_log.txt
+dpkg-query -W -f='${Package} ${Version} ${Status}\n' python3-serial #>> error_log.txt
+dpkg-query -W -f='${Package} ${Version} ${Status}\n' python3-rpi.gpio #>> error_log.txt
 dpkg-query -W -f='${Package} ${Version} ${Status}\n' i2c-tools #>> error_log.txt
-dpkg-query -W -f='${Package} ${Version} ${Status}\n' python-smbus #>> error_log.txt
+dpkg-query -W -f='${Package} ${Version} ${Status}\n' python3-smbus #>> error_log.txt
 # dpkg-query -W -f='${Package} ${Version} ${Status}\n' arduino #>> error_log.txt
 # dpkg-query -W -f='${Package} ${Version} ${Status}\n' minicom #>> error_log.txt
 dpkg-query -W -f='${Package} ${Version} ${Status}\n' scratch #>> error_log.txt

@@ -40,7 +40,6 @@ parse_cmdline_arguments() {
   systemwide=true
   userlocal=false
   envlocal=false
-  usepython3exec=true
 
   # the following option tells which branch has to be used
   selectedbranch="master"
@@ -126,7 +125,6 @@ parse_cmdline_arguments() {
 
   # create rest of list of arguments for rfrtools call
   rfrtools_options+=("$selectedbranch")
-  [[ $usepython3exec = "true" ]] && rfrtools_options+=("--use-python3-exe-too")
   [[ $updaterepo = "true" ]] && rfrtools_options+=("--update-aptget")
   [[ $installdependencies = "true" ]] && rfrtools_options+=("--install-deb-deps")
   [[ $install_pkg_rfrtools = "true" ]] && rfrtools_options+=("--install-python-package")
@@ -143,12 +141,8 @@ parse_cmdline_arguments() {
 # called in <<install_rfrtools_repo>>
 check_dependencies() {
   command -v git >/dev/null 2>&1 || { echo "This script requires \"git\" but it's not installed. Error occurred with RFR_Tools installation." >&2; exit 1; }
-  command -v python >/dev/null 2>&1 || { echo "Executable \"python\" couldn't be found. Error occurred with RFR_Tools installation." >&2; exit 2; }
-  command -v pip >/dev/null 2>&1 || { echo "Executable \"pip\" couldn't be found. Error occurred with RFR_Tools installation." >&2; exit 3; }
-  if [[ $usepython3exec = "true" ]]; then
-    command -v python3 >/dev/null 2>&1 || { echo "Executable \"python3\" couldn't be found. Error occurred with RFR_Tools installation." >&2; exit 4; }
-    command -v pip3 >/dev/null 2>&1 || { echo "Executable \"pip3\" couldn't be found. Error occurred with RFR_Tools installation." >&2; exit 5; }
-  fi
+  command -v python3 >/dev/null 2>&1 || { echo "Executable \"python3\" couldn't be found. Error occurred with RFR_Tools installation." >&2; exit 2; }
+  command -v pip3 >/dev/null 2>&1 || { echo "Executable \"pip3\" couldn't be found. Error occurred with RFR_Tools installation." >&2; exit 3; }
 
   if [[ ! -f $DEXTERSCRIPT/functions_library.sh ]]; then
     echo "script_tools didn\'t get installed. Enable the installation of dependencies with RFR_Tools.'"
@@ -199,12 +193,9 @@ clone_grovepi() {
 
 # called by <<install_python_pkgs_and_dependencies>>
 install_python_packages() {
-  [[ $systemwide = "true" ]] && sudo python setup.py install \
-              && [[ $usepython3exec = "true" ]] && sudo python3 setup.py install
-  [[ $userlocal = "true" ]] && python setup.py install --user \
-              && [[ $usepython3exec = "true" ]] && python3 setup.py install --user
-  [[ $envlocal = "true" ]] && python setup.py install \
-              && [[ $usepython3exec = "true" ]] && python3 setup.py install
+  [[ $systemwide = "true" ]] && sudo python3 setup.py install
+  [[ $userlocal = "true" ]] && python3 setup.py install --user
+  [[ $envlocal = "true" ]] && python3 setup.py install
 }
 
 # called by <<install_python_pkgs_and_dependencies>>
@@ -217,20 +208,12 @@ remove_python_packages() {
   # saves output to file because we want to have the syntax highlight working
   # does this for both root and the current user because packages can be either system-wide or local
   # later on the strings used with the python command can be put in just one string that gets used repeatedly
-  python -c "import pkgutil; import os; \
+  python3 -c "import pkgutil; import os; \
               eggs_loader = pkgutil.find_loader('$1'); found = eggs_loader is not None; \
               output = os.path.dirname(os.path.realpath(eggs_loader.get_filename('$1'))) if found else ''; print(output);" >> $PIHOME/.pypaths
-  sudo python -c "import pkgutil; import os; \
+  sudo python3 -c "import pkgutil; import os; \
               eggs_loader = pkgutil.find_loader('$1'); found = eggs_loader is not None; \
               output = os.path.dirname(os.path.realpath(eggs_loader.get_filename('$1'))) if found else ''; print(output);" >> $PIHOME/.pypaths
-  if [[ $usepython3exec = "true" ]]; then
-    python3 -c "import pkgutil; import os; \
-                eggs_loader = pkgutil.find_loader('$1'); found = eggs_loader is not None; \
-                output = os.path.dirname(os.path.realpath(eggs_loader.get_filename('$1'))) if found else ''; print(output);" >> $PIHOME/.pypaths
-    sudo python3 -c "import pkgutil; import os; \
-                eggs_loader = pkgutil.find_loader('$1'); found = eggs_loader is not None; \
-                output = os.path.dirname(os.path.realpath(eggs_loader.get_filename('$1'))) if found else ''; print(output);" >> $PIHOME/.pypaths
-  fi
 
   # removing eggs for $1 python package
   # ideally, easy-install.pth needs to be adjusted too
@@ -252,7 +235,6 @@ install_deb_dependencies() {
   # needs to be in; this is all done in script_tools while doing an apt-get update
   sudo apt-get install --no-install-recommends -y nodejs\
     git libi2c-dev i2c-tools \
-    python-setuptools python-pip python-smbus python-dev python-serial python-rpi.gpio python-numpy python-scipy \
     python3-setuptools python3-pip python3-smbus python3-dev python3-serial python3-rpi.gpio python3-numpy python3-scipy \
     libncurses5
 

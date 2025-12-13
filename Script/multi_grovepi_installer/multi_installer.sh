@@ -12,7 +12,6 @@ if [ -e "grove_pi_v1_4_0_addr$ADDRESS.hex" ] && [ -e "setup$ADDRESS.py" ] && [ -
   echo "..."
   sudo avrdude -c gpio -p m328p -U flash:w:grove_pi_v1_4_0_addr"$ADDRESS".hex
   echo "INSTALLING PYTHON LIBRARY"
-  sudo python setup"$ADDRESS".py install
   sudo python3 setup"$ADDRESS".py install
   echo "I2C DEVICES AVAILABLE"
   sleep 1

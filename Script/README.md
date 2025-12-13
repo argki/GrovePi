@@ -2,16 +2,18 @@
 
 You need internet access for the following step(s).
 
-The quickest way for installing the GrovePi is to enter the following command:
-```
-curl -kL dexterindustries.com/update_grovepi | bash
+The quickest way for installing the GrovePi using the locally cloned scripts is to enter the following commands (assuming the combined `DexterInd` repository has been cloned into the `pi` user's home directory as `~/DexterInd`):
+```bash
+cd ~/DexterInd/GrovePi/Script
+bash update_grovepi.sh
 ```
 
 By default, the GrovePi package is installed system-wide, [script_tools](https://github.com/DexterInd/script_tools) and [RFR_Tools](https://github.com/DexterInd/RFR_Tools) are updated each time the script is ran.
 
 An example using options appended to the command can be:
-```
-curl -kL dexterindustries.com/update_grovepi | bash -s -- --user-local --no-update-aptget --no-dependencies
+```bash
+cd ~/DexterInd/GrovePi/Script
+bash update_grovepi.sh --user-local --no-update-aptget --no-dependencies
 ```
 
 ## Command Options
@@ -34,16 +36,18 @@ As a last thing, different versions of it can be pulled by appending a correspon
 
 Now, if you only want the absolute minimum in order to get going with the GrovePi, you can run this command:
 ```bash
-curl -kL dexterindustries.com/update_grovepi | bash -s -- --bypass-gui-installation
+cd ~/DexterInd/GrovePi/Script
+bash update_grovepi.sh --bypass-gui-installation
 ```
 
 This will only get you installed the GrovePi dependencies and nothing else. You still can use options such as `--user-local` or `--env-local` if you are working with a different kind of environment. Keep in mind that `--system-wide` is selected by default.
-
+ 
 ## Subsequent Updates
 
 If the GrovePi has been installed either by using the full command or the one for the minimal installation, this means you have all the packages installed already and all dependencies put in. Therefore, on subsequent installation, you can skip installing any dependency and instead just reinstall the python package of the GrovePi. To do this, you can run this command:
 ```bash
-curl -kL dexterindustries.com/update_grovepi | bash -s -- --bypass-rfrtools --no-dependencies
+cd ~/DexterInd/GrovePi/Script
+bash update_grovepi.sh --bypass-rfrtools --no-dependencies
 ```
 
 Or if this is too complex, you can always stick to the command meant for the full installation or the minimal one.

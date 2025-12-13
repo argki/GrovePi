@@ -1,11 +1,12 @@
 ## Installing the GrovePi for Python
 
-This is how the GrovePi python library has to be installed:
+Assuming the combined `DexterInd` repository has already been cloned into the `pi` user's home directory (for example at `~/DexterInd`), the GrovePi python library can be installed with:
 ```bash
-curl -kL dexterindustries.com/update_grovepi | bash
+cd ~/DexterInd/GrovePi/Script
+bash update_grovepi.sh
 ```
 
-You can also install it by running the `setup.py` installer, but beware of the other requirements for it too: specifically about the `di_i2c` module from https://github.com/DexterInd/RFR_Tools that has to be installed and the enabling of the I2C in `raspi-config` menu. 
+You can also install it by running the `setup.py` installer directly, but beware of the other requirements for it too: specifically about the `di_i2c` module from https://github.com/DexterInd/RFR_Tools that has to be installed and the enabling of the I2C in `raspi-config` menu. 
 ```
 pip install -r requirements.txt
 ```

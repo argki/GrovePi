@@ -11,18 +11,20 @@ Its official API is written in Python, but it can also be interfaced with in oth
 
 ## Getting Started
 
-In order to quick install the `GrovePi` repository, open up a terminal and type the following command:
+For a quick installation of the `GrovePi` using the scripts in this repository, assume that the combined `DexterInd` repository has already been cloned into the `pi` user's home directory (for example at `~/DexterInd`), then run:
 
 ```bash
-curl -kL dexterindustries.com/update_grovepi | bash
+cd ~/DexterInd/GrovePi/Script
+bash update_grovepi.sh
 ```
 
 The same command can be used for updating the `GrovePi` to the latest version. For more details on how you can install/update your `GrovePi`, please check this [README](Script/README.md).
 
-To install into a virtual environment, first active your virtualenv and type the following command:
+To install into a virtual environment, first activate your virtualenv and then run:
 
 ```bash
-curl -kL dexterindustries.com/update_grovepi | bash -s -- --user-local --bypass-gui-installation
+cd ~/DexterInd/GrovePi/Script
+bash update_grovepi.sh --user-local --bypass-gui-installation
 ```
 
 To flash the latest firmware to the GrovePi, run

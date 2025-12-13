@@ -30,11 +30,7 @@ For more information on how the serial ports are set up, you can [read this arti
 
 To run the GPS script, you need to have followed the instructions in the previous section and have connected the [Grove GPS Module](http://www.seeedstudio.com/depot/Grove-GPS-p-959.html?cPath=25_130) to the **RPIser** port of the GrovePi.
 
-The script can be either launched with Python 2 or Python 3.
-```bash
-sudo python dextergps.py
-```
-or
+The script should be launched with Python 3.
 ```bash
 sudo python3 dextergps.py
 ```

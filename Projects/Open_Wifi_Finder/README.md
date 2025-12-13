@@ -33,7 +33,7 @@ The contents of start.sh are going to be:
  
 ```
 #!/bin/bash
-sudo python /home/pi/wifi_finder.py
+sudo python3 /home/pi/wifi_finder.py
 ```
 
 And then open up rc.local

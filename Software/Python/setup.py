@@ -43,7 +43,7 @@ except IOError:
 with open('requirements.txt') as fp:
     install_requires = fp.read()
 
-# To install the GrovePi library systemwide, use: sudo python setup.py install
+# To install the GrovePi library systemwide, use: sudo python3 setup.py install
 import setuptools
 import os
 import sys

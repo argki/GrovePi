@@ -9,7 +9,6 @@
 from time import sleep
 import smbus
 from Adafruit_I2C import Adafruit_I2C
-import RPi.GPIO as GPIO
 from smbus import SMBus
 
 TSL2561_Control = 0x80
@@ -81,11 +80,7 @@ B8C = 0x0000 # 0.000 * 2^LUX_SCALE
 M8C = 0x0000 # 0.000 * 2^LUX_SCALE
 
 # bus parameters
-rev = GPIO.RPI_REVISION
-if rev == 2 or rev == 3:
-	bus = smbus.SMBus(1)
-else:
-	bus = smbus.SMBus(0)
+bus = smbus.SMBus(1)
 i2c = Adafruit_I2C(TSL2561_Address)
 
 debug = False

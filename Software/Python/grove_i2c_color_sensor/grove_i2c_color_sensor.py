@@ -1,7 +1,6 @@
 import smbus
 import time
 import math
-import RPi.GPIO
 
 # Released under the MIT license (http://choosealicense.com/licenses/mit/).
 # For more information see https://github.com/DexterInd/GrovePi/blob/master/LICENSE
@@ -132,12 +131,8 @@ class GroveI2CColorSensor:
         bus to use.
         """
         if bus_number is None:
-            # Use Rasbperry Pi revision to choose bus number
-            board_revision = RPi.GPIO.RPI_REVISION
-            if board_revision == 2 or board_revision == 3:
-                bus_number = 1
-            else:
-                bus_number = 0
+            # Default to I2C bus 1 on modern Raspberry Pi boards
+            bus_number = 1
         self.bus = smbus.SMBus(bus_number)
         self.use_continuous_integration()
         self.set_gain_and_prescaler(1, 1)

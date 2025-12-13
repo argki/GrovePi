@@ -23,7 +23,6 @@
 import serial, time
 import smbus
 import math
-import RPi.GPIO as GPIO
 import struct
 import sys
 import ir_receiver_check

@@ -13,16 +13,10 @@
 # For more information see https://github.com/DexterInd/GrovePi/blob/master/LICENSE
 
 import time,sys
-import RPi.GPIO as GPIO
 import smbus
 import math
 
-# use the bus that matches your raspi version
-rev = GPIO.RPI_REVISION
-if rev == 2 or rev == 3:
-    bus = smbus.SMBus(1)
-else:
-    bus = smbus.SMBus(0)
+bus = smbus.SMBus(1)
 
 class lsm303d:
 	# LSM303 Address definitions

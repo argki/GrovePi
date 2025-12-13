@@ -13,16 +13,10 @@
 # The software for this sensor is still in development and might make your GrovePi unuable as long as this sensor is connected with the GrovePi
 #################################################################################################################################################
 import time,sys
-import RPi.GPIO as GPIO
 import smbus
 
 debug = 0
-# use the bus that matches your raspi version
-rev = GPIO.RPI_REVISION
-if rev == 2 or rev == 3:
-    bus = smbus.SMBus(1)
-else:
-    bus = smbus.SMBus(0)
+bus = smbus.SMBus(1)
 
 class th02:
 

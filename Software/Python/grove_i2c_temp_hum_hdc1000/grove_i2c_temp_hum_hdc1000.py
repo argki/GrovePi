@@ -13,14 +13,9 @@
 # For more information see https://github.com/DexterInd/GrovePi/blob/master/LICENSE
 
 import smbus
-import RPi.GPIO as GPIO
 import time
 
-rev = GPIO.RPI_REVISION
-if rev == 2 or rev == 3:
-    bus = smbus.SMBus(1)
-else:
-    bus = smbus.SMBus(0)
+bus = smbus.SMBus(1)
 
 class HDC1000:
     I2C_ADDR = 0

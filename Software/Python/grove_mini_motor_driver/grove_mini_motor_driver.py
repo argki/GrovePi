@@ -19,13 +19,7 @@ def getNewSMBus():
         bus = smbus.SMBus(1)
     else:
         import smbus
-        import RPi.GPIO as GPIO
-        revision = GPIO.RPI_REVISION
-
-        if revision == 2 or revision == 3:
-            bus = smbus.SMBus(1)
-        else:
-            bus = smbus.SMBus(0)
+        bus = smbus.SMBus(1)
     return bus
 
 # function for returning a formatted time date

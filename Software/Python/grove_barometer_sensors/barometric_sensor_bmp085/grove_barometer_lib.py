@@ -20,14 +20,9 @@
 
 import smbus
 import time
-import RPi.GPIO as GPIO
 
 
-rev = GPIO.RPI_REVISION
-if rev == 2 or rev == 3:
-    bus = smbus.SMBus(1)
-else:
-    bus = smbus.SMBus(0)
+bus = smbus.SMBus(1)
 
 HP20X_I2C_DEV_ID = 0x76     # Barometer device address
 

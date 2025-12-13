@@ -21,14 +21,9 @@
 import smbus
 import time
 import math
-import RPi.GPIO as GPIO
 import struct
 
-rev = GPIO.RPI_REVISION
-if rev == 2 or rev == 3:
-    bus = smbus.SMBus(1)
-else:
-    bus = smbus.SMBus(0)
+bus = smbus.SMBus(1)
 
 address=0x3c
 addressingMode= None

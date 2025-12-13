@@ -10,7 +10,7 @@ if [ -e "grove_pi_v1_4_0_addr$ADDRESS.hex" ] && [ -e "setup$ADDRESS.py" ] && [ -
   echo "Setting up GrovePi with Address $ADDRESS"
   echo "BURNING FIRMWARE"
   echo "..."
-  sudo avrdude -c gpio -p m328p -U flash:w:grove_pi_v1_4_0_addr"$ADDRESS".hex
+  sudo avrdude -c linuxgpio -p m328p -U flash:w:grove_pi_v1_4_0_addr"$ADDRESS".hex
   echo "INSTALLING PYTHON LIBRARY"
   sudo python3 setup"$ADDRESS".py install
   echo "I2C DEVICES AVAILABLE"

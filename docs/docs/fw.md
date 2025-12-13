@@ -76,9 +76,9 @@ Next, click on the build button or use **ALT-CTRL-B** key combination to build t
 
 ## Resetting the GrovePi
 
-To reset the GrovePi from your Raspberry Pi, run the following command provided you have installed the GrovePi library on your image:
+To reset the GrovePi from your Raspberry Pi, run the following command provided you have installed the GrovePi library on your image and configured the `linuxgpio` programmer in `avrdude.conf`:
 ```bash
-avrdude -c gpio -p m328p
+avrdude -c linuxgpio -p m328p
 ```
 
 <!-- ## Enabling Software I2C

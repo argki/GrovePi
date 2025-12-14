@@ -185,10 +185,13 @@ clone_grovepi() {
   sudo mkdir -p $DEXTER_PATH
   sudo chown pi:pi -R $DEXTER_PATH
   cd $DEXTER_PATH
-  # it's simpler and more reliable (for now) to just delete the repo and clone a new one
+  # it's simpler and more reliable (for now) to just delete the repo and copy a fresh one from the local DexterInd checkout
   # otherwise, we'd have to deal with all the intricacies of git
   sudo rm -rf $GROVEPI_DIR
-  git clone --quiet --depth=1 -b $selectedbranch https://github.com/DexterInd/GrovePi.git
+  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  dexterind_root="$(cd "$script_dir/../.." && pwd)"
+  local_grovepi="$dexterind_root/GrovePi"
+  cp -a "$local_grovepi" "$GROVEPI_DIR"
   cd $GROVEPI_DIR
 }
 

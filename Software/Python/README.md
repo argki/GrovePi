@@ -30,4 +30,4 @@ GrovePi パッケージとともにインストールされるライブラリの
 
 ## Python Consideration
 
-GrovePi パッケージ自体は Python 2.x / 3.x の両方向けにインストール可能ですが、メインの `grovepi.py` 以外の一部ライブラリは Python 3 でのみ利用できます。そのため、今後引退が確実な Python 2 ではなく、最初から Python 3 を標準として使うことをおすすめします。
+GrovePi パッケージは Python 3 向けに提供されており、Python 2 はサポートされていません。GrovePi を利用する際は、Python 3 を標準として使用してください。

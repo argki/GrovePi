@@ -1,6 +1,6 @@
 #API - GPIO Functions
 
-このセクションでは、GPIO 関連の Python API リファレンスを説明します。このライブラリは Python 2.x / 3.x の両方のメジャーバージョンに対応しています。
+このセクションでは、GPIO 関連の Python API リファレンスを説明します。このライブラリは Python 3 を対象としています。
 
 ---
 **IMPORTANT**

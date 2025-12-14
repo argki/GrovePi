@@ -1,74 +1,68 @@
 ## Stacking It
 
-To get the GrovePi up and running we first need to attach the GrovePi to the RaspberryPi. It's
-a very simple process where it only needs to be stacked on top the GrovePi just like with any other hat.
+GrovePi を使い始めるためには、まず GrovePi を Raspberry Pi に装着する必要があります。これは他の HAT と同様に、GrovePi を Raspberry Pi の上にそのまま重ねるだけのシンプルな作業です。
 
-Before powering the Pi up, you need to make sure there's no foam sticked to the headers as that
-can trigger the Raspberry Pi to reboot. That's because the foam is electrically conductive and it
-basically shorts the pins.
+電源を入れる前に、ヘッダピンにフォーム（スポンジ状の保護材）が付いたままになっていないか必ず確認してください。フォームは導電性があり、ピン同士をショートさせて Raspberry Pi を再起動させてしまう原因になります。
 
-In the end the GrovePi will sit on the Raspberry Pi like in the following photo.
+最終的には、GrovePi は次の写真のように Raspberry Pi の上に載った状態になります。
 
 ![Stacked GrovePi](img/stackedgrovepi.jpg)
 
 ## How to Install
 
-When it comes to installation there are 2 ways to do it:
+インストール方法は大きく 2 通りあります。
 
-1. By using our pre-made image called [Raspbian For Robots](https://sourceforge.net/projects/dexterindustriesraspbianflavor/).
-1. By using a fresh Raspbian image and running our install command.
+1. あらかじめ用意されたイメージ [Raspbian For Robots](https://sourceforge.net/projects/dexterindustriesraspbianflavor/) を使う方法  
+1. クリーンな Raspbian イメージを用意し、インストール用コマンドを実行する方法
 
 #### For Raspbian For Robots Image
 
-The benefit of using our image is that you don't have to worry about installing the GrovePi - because it's already on it.
-Still after a while you will be required to run updates via the console or via our GUI app in order to get the latest.
+Raspbian For Robots イメージを使う利点は、GrovePi が最初からインストール済みであるため、自分でインストール作業を行う必要がない点です。  
+ただし、最新の状態を保つには、コンソールあるいは GUI アプリから定期的にアップデートを実行する必要があります。
 
 #### For Manual Installation
 
-On the other hand, when using a fresh Raspbian image the initial installation takes some time, but subsequent updates take
-way less. The disadvantage with method is that you don't get the other robots installed too, so if you don't want to use
-other robots from our family then this method is the preferred one.
+一方、クリーンな Raspbian イメージを使う場合は、最初のインストールにやや時間がかかりますが、その後のアップデートは短時間で済みます。  
+この方法のデメリットは、Dexter Industries 製の他のロボット用ソフトウェアが自動では入らないことです。他のロボットを使う予定がない場合は、この方法が向いています。
 
-To install the GrovePi on a fresh image of Raspbian, run the following command:
+クリーンな Raspbian イメージに GrovePi をインストールするには、次のコマンドを実行します。
+
 ```bash
 curl -kL dexterindustries.com/update_grovepi | bash
 ```
 
 #### How to Update to a Newer Version
 
-Regardless of how you got the GrovePi installed (manually or by getting the Raspbian For Robots image), there's only one way to update
-to the latest version:
+GrovePi をどの方法でインストールした場合でも（手動インストールか Raspbian For Robots かに関わらず）、最新版へアップデートする方法は 1 つだけです。
+
 ```bash
 curl -kL dexterindustries.com/update_grovepi | bash
 ```
 
-As you can see it's basically the same command used for installing the library on a fresh Raspbian image.
+見てのとおり、クリーンな Raspbian へのインストール時と同じコマンドです。
 
 ## Where Is It Installed
 
-Upon installing the GrovePi or getting our flavored image the GrovePi library can be found in `/home/pi/Dexter/GrovePi` directory.
+GrovePi をインストールするか、あるいは Raspbian For Robots を利用した場合、GrovePi ライブラリは `/home/pi/Dexter/GrovePi` ディレクトリ内に配置されます。
 
-The `/home/pi/Dexter/GrovePi` is a mirrored version of [our GitHub repository](https://github.com/DexterInd/GrovePi/tree/master) of the master branch.
+`/home/pi/Dexter/GrovePi` の中身は、[GitHub 上の GrovePi リポジトリ](https://github.com/DexterInd/GrovePi/tree/master) の master ブランチと同じ内容になっています。
 
 ## What I2C Bus to Use
 
-By default, the GrovePi library is set to use the `RPI_1SW` bus, which is a software implementation of the I2C specifically built to circumvent
-the issues with the hardware I2C of the Raspberry Pi. It's very fast and it doesn't use much CPU time at all. We recommend using this bus, thus,
-when importing the `grovepi` module, you don't have to do anything.
+既定では、GrovePi ライブラリは `RPI_1SW` バスを使用する設定になっています。これは、Raspberry Pi のハードウェア I2C の問題を回避するために作られたソフトウェア実装の I2C です。高速で、CPU 負荷もほとんどかかりません。通常はこのバスを使うことを推奨しており、その場合は `grovepi` モジュールを import するだけで特別な設定は不要です。
 
-There's also the `RPI_1`, the classic HW I2C of the Raspberry Pi, which is buggy and unreliable. We don't see any reason in using this one in any scenario. Period.
+他に、Raspberry Pi 標準のハードウェア I2C である `RPI_1` バスもありますが、こちらはバグや不安定さが知られています。どのような状況でも、このバスを使う理由はほとんどないと考えています。
 
-In order to change the bus, presumably to `RPI_1` bus, call `grovepi.set_bus("RPI_1")` or `grovepi.set_bus("RPI_1SW")` in case you've changed the default one.
+バスを変更したい場合（例: `RPI_1` に切り替えたい場合）は、`grovepi.set_bus("RPI_1")` のように `grovepi.set_bus("RPI_1")` または `grovepi.set_bus("RPI_1SW")` を呼び出してください。
 
 ## Scratch Support
 
-Scratch support comes by default with our flavored image, Raspbian For Robots, but if you find yourself to be using the classic Raspbian then
-you also need to run the following command after you have installed the GrovePi:
+Scratch サポートは、Raspbian For Robots イメージには標準で含まれています。クラシックな Raspbian を使用している場合は、GrovePi をインストールした後に次のコマンドを実行して Scratch 用のサポートを追加してください。
+
 ```bash
 sudo bash /home/pi/Dexter/GrovePi/Script/install_scratch.sh
 ```
 
 ## Community Support
 
-To find out more on the GrovePi you can visit our forum and check for threads with the [grovepi tag](https://forum.dexterindustries.com/tags/grovepi)
-or by going to the [GrovePi category](https://forum.dexterindustries.com/c/grovepi).
+GrovePi についてさらに知りたい場合は、フォーラムで [grovepi タグ](https://forum.dexterindustries.com/tags/grovepi) が付いたスレッドを確認するか、[GrovePi カテゴリ](https://forum.dexterindustries.com/c/grovepi) を参照してください。

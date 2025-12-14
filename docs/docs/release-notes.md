@@ -2,64 +2,64 @@
 
 ## Maintenance Team
 
-The current and past members of the GrovePi team in alphabetical order are:
+GrovePi チームの現在および過去のメンバー（アルファベット順）は次のとおりです。
 
 - [@CleoQc](https://github.com/CleoQc)
 - [@johnisanerd](https://github.com/johnisanerd)
 - [@karan259](https://github.com/karan259)
 - [@RobertLucian](https://github.com/RobertLucian)
 
-Also, we have a couple of notable contributors to the GrovePi but for other libraries:
+また、GrovePi 本体ではなく他のライブラリへの貢献という形で、以下のような方々にも多大な貢献をいただいています。
 
-- [@marcellobarile](https://github.com/marcellobarile) for the NodeJS library
-- [@mcauser](https://github.com/mcauser) for adding different new functionalities/bug fixes/examples to our current library
+- [@marcellobarile](https://github.com/marcellobarile) — NodeJS ライブラリ
+- [@mcauser](https://github.com/mcauser) — さまざまな新機能／バグ修正／サンプルコードの追加
 - [@lanselambor](https://github.com/lanselambor)
 - [@nikkoura](https://github.com/nikkoura)
-- [@lucavallin](https://github.com/lucavallin) for coming with fixes to the Go library
-- [@rpedersen](https://github.com/rpedersen) for C# stuff
-- [@k33g](https://github.com/k33g) for Java library
+- [@lucavallin](https://github.com/lucavallin) — Go ライブラリの修正
+- [@rpedersen](https://github.com/rpedersen) — C# 関連
+- [@k33g](https://github.com/k33g) — Java ライブラリ
 
 ## Version 1.4.0 - 27 April 2019
 
-- Add support for setting up interrupt events on each digital port of the GrovePi, thus breaking the limit of just two available hardware interrupts [#446](https://github.com/DexterInd/GrovePi/pull/446)
-- Enable the Grove Dust Sensor, the Grove Encoder and the Grove Flow Meter to work on any digital port of the GrovePi and support 7 or 3 or respectively 7 devices at the same time [#446](https://github.com/DexterInd/GrovePi/pull/446)
+- GrovePi の各デジタルポートに割り込みイベントを設定できるようになり、ハードウェア割り込みが 2 つしかないという制限を回避 [#446](https://github.com/DexterInd/GrovePi/pull/446)
+- Grove Dust Sensor、Grove Encoder、Grove Flow Meter が GrovePi 上の任意のデジタルポートで動作し、それぞれ 7 個・3 個・7 個まで同時接続できるように拡張 [#446](https://github.com/DexterInd/GrovePi/pull/446)
 
 ## [Version 1.3.0](https://github.com/DexterInd/GrovePi/projects/2) - 1 Aug 2018
 
-- Fixed synchronization bugs which led to very small IO rates
+- IO レートが極端に低下する原因になっていた同期バグを修正
 
-    - Also caused values to overlap on other ports [#412](https://github.com/DexterInd/GrovePi/issues/412)
-    - Caused I2C errors when functions were called with no delay between them [#409](https://github.com/DexterInd/GrovePi/issues/409)
+    - 他ポートの値が混ざってしまう問題を引き起こしていた [#412](https://github.com/DexterInd/GrovePi/issues/412)
+    - 関数呼び出しの間にディレイを入れないと I2C エラーが発生する問題を引き起こしていた [#409](https://github.com/DexterInd/GrovePi/issues/409)
 
-- Small refactorization of the code to something slightly better
-- Fixed the dust sensor [#408](https://github.com/DexterInd/GrovePi/issues/408)
-- Mitigated abnormality caused by the Raspberry Pi not supporting clock stretching on the I2C [#411](https://github.com/DexterInd/GrovePi/issues/411)
-- Debugged and sped up the rate of acquisition of the DHT sensor [#418](https://github.com/DexterInd/GrovePi/issues/418)
-- Add IR receiver functionality for any remote control and fix inherent issues with the library [#416](https://github.com/DexterInd/GrovePi/issues/416)
-- Add option to set the flow meter and the dust sensor on different ports other than D2 [#421](https://github.com/DexterInd/GrovePi/issues/421)
+- コードを軽くリファクタリングし、構造を整理
+- Dust sensor の問題を修正 [#408](https://github.com/DexterInd/GrovePi/issues/408)
+- Raspberry Pi の I2C が clock stretching をサポートしていないことによる不具合を緩和 [#411](https://github.com/DexterInd/GrovePi/issues/411)
+- DHT センサーの取得処理をデバッグし、サンプリング速度を改善 [#418](https://github.com/DexterInd/GrovePi/issues/418)
+- 任意のリモコンを利用できる IR receiver 機能を追加し、ライブラリに内在していた問題を修正 [#416](https://github.com/DexterInd/GrovePi/issues/416)
+- Flow meter と Dust sensor を D2 以外のポートにも割り当てられるオプションを追加 [#421](https://github.com/DexterInd/GrovePi/issues/421)
 
 ## Version 1.2.7 - 20 Dec 2016
 
--  Faster IO
--  Less IO Errors
--  RTC and MMA7xxx accelerometer code removed from the firmware
+- IO の高速化
+- IO エラーの削減
+- RTC および MMA7xxx 加速度センサーに関するコードをファームウェアから削除
 
 ## Version 1.2.2 - 22 Jan 2015
 
-- Grove Chainable RGB LED added
-- Ability to persist a RGB color in memory for later use
+- Grove Chainable RGB LED を追加
+- RGB カラーをメモリに保存し、後から再利用できる機能を追加
 
 ## Version 1.2.1 - 30 Dec 2014
 
-- Grove 4 Digit Display added
+- Grove 4 Digit Display を追加
 
 ## Version 1.2.0 - 29 Dec 2014
 
-- Grove LED Bar added
-- Firmware version made available
+- Grove LED Bar を追加
+- ファームウェアのバージョン情報を取得できるように変更
 
 ## Version 1.1 - 13 Feb 2014
 
-- DHT, ultrasonic, RTC code added
-- Support for multiple modules for same type added (Not tested)
-- Protocol made more robust
+- DHT、超音波センサー、RTC のコードを追加
+- 同種モジュールを複数サポート（未十分テスト）
+- プロトコルをより堅牢に改良

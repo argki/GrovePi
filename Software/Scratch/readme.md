@@ -1,11 +1,12 @@
 # Program the GrovePi in Scratch
 
-You can program the GrovePi in Scratch.  This repo contains support programs and example programs to help you program the [GrovePi](http://www.dexterindustries.com/GrovePi) in Scratch.
+GrovePi は Scratch からもプログラミングできます。このリポジトリには、[GrovePi](http://www.dexterindustries.com/GrovePi) を Scratch で扱うためのサポート用プログラムとサンプルプログラムが含まれています。
 
 ## Getting Started Examples
-Please see our Examples folder for examples on how to get started with programming the GrovePi in Scratch!
+GrovePi を Scratch でプログラミングする方法については、`Examples` フォルダ内のサンプルを参照してください。
 
-Here are a list of example commands.
+代表的なコマンド例の一覧は次のとおりです。
+
 ![Scratch Functions](scratch_functions.png "Overview of functions in Scratch.")
 
 ## See Also

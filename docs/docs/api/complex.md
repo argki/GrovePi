@@ -1,9 +1,8 @@
 #API - Complex Devices
 
-In this section the Python API reference for more complex devices is described. This library is supported on both major versions
-of Python: 2.x and 3.x.
+このセクションでは、より複雑なデバイス向けの Python API リファレンスを説明します。このライブラリは Python 2.x / 3.x の両方のメジャーバージョンに対応しています。
 
-The API for the following sensors is described in this section:
+このセクションで説明するセンサーは次のとおりです。
 
 - [Grove LED bar](http://wiki.seeedstudio.com/Grove-LED_Bar/)
 - [Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/)
@@ -12,283 +11,280 @@ The API for the following sensors is described in this section:
 ---
 **IMPORTANT**
 
-This library and the other ones too are not thread-safe. You cannot call the GrovePi from multiple threads or processes
-as that will put the GrovePi into a broken state.
+このライブラリ（および他のライブラリ）はスレッドセーフではありません。複数のスレッドやプロセスから同時に GrovePi を呼び出すことはできません。そのような使い方をすると GrovePi が不正な状態になります。
 
-In case you need to reset the GrovePi from your Raspberry Pi, [check this section](../fw/#resetting-the-grovepi).
+Raspberry Pi から GrovePi をリセットする必要がある場合は、[このセクション](../fw/#resetting-the-grovepi) を参照してください。
 
-The functions don't verify if the input parameters are valid and therefore the parameters have to be verified/validated before that.
-Calling a function with improper parameters can result in an undefined behavior for the GrovePi.
+各関数は引数が妥当かどうかを検証しません。そのため、呼び出し側で事前に引数の検証・チェックを行う必要があります。不正な引数で関数を呼び出すと、GrovePi の動作が未定義になる可能性があります。
 ---
 
 ##`grovepi.ledBar_init(pin, orientation)`
-Initialize an [LED bar](http://wiki.seeedstudio.com/Grove-LED_Bar/).
+[LED bar](http://wiki.seeedstudio.com/Grove-LED_Bar/) を初期化します。
 
 **Parameters**
 
-- `pin {Integer}` a number to identify the port (D2-D8) to which the LED bar is assigned to
-- `orientation {Integer}` `0` to go from red to green or 1 to go the other way
+- `pin {Integer}` LED bar を接続するポート番号（D2〜D8）
+- `orientation {Integer}` 色の並び方向。`0` で赤→緑、`1` でその逆
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.ledBar_orientation(pin, orientation)`
-Set the orientation on an already initialized [LED bar](http://wiki.seeedstudio.com/Grove-LED_Bar/).
+既に初期化済みの [LED bar](http://wiki.seeedstudio.com/Grove-LED_Bar/) の向きを設定します。
 
 **Parameters**
 
-- `pin {Integer}` a number to identify the port (D2-D8) to which the LED bar is assigned to
-- `orientation {Integer}` `0` to go from red to green or 1 to go the other way
+- `pin {Integer}` LED bar を接続するポート番号（D2〜D8）
+- `orientation {Integer}` `0` で赤→緑、`1` でその逆
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.ledBar_setLevel(pin, level)`
-Set the level on an [LED bar](http://wiki.seeedstudio.com/Grove-LED_Bar/).
+[LED bar](http://wiki.seeedstudio.com/Grove-LED_Bar/) の点灯レベルを設定します。
 
 **Parameters**
 
-- `pin {Integer}` a number to identify the port (D2-D8) to which the LED bar is assigned to
-- `orientation {Integer}` `0` to `10` corresponding to the number of levels that exist on the LED bar.
+- `pin {Integer}` LED bar を接続するポート番号（D2〜D8）
+- `orientation {Integer}` LED bar 上のレベル数に対応する `0`〜`10`
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.ledBar_toggleLed(pin, led)`
-Toggle the state of one LED of the 10 levels of the [LED bar](http://wiki.seeedstudio.com/Grove-LED_Bar/).
+[LED bar](http://wiki.seeedstudio.com/Grove-LED_Bar/) 上に並ぶ 10 個の LED のうち 1 つの状態をトグルします。
 
 **Parameters**
 
-- `pin {Integer}` a number to identify the port (D2-D8) to which the LED bar is assigned to
-- `led {Integer}` taking values from `0` to `10` depending on which LED to toggle
+- `pin {Integer}` LED bar を接続するポート番号（D2〜D8）
+- `led {Integer}` トグルする LED のインデックス（`0`〜`10`）
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.ledBar_setBits(pin, state)`
-Set the LED activations of the [LED bar](http://wiki.seeedstudio.com/Grove-LED_Bar/) based on the binary representation of a 10-bit number.
+10 bit の値のビットパターンに基づいて、[LED bar](http://wiki.seeedstudio.com/Grove-LED_Bar/) の各 LED の ON/OFF をまとめて設定します。
 
 **Parameters**
 
-- `pin {Integer}` a number to identify the port (D2-D8) to which the LED bar is assigned to
-- `state {Integer}` a number from `0` to `1023` that covers all states for all 10 LEDs of the LED bar
+- `pin {Integer}` LED bar を接続するポート番号（D2〜D8）
+- `state {Integer}` 10 個の LED それぞれの ON/OFF 状態を表す `0`〜`1023` の値
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.ledBar_getBits(pin)`
-Read the state of LED activations on the [LED bar](http://wiki.seeedstudio.com/Grove-LED_Bar/).
+[LED bar](http://wiki.seeedstudio.com/Grove-LED_Bar/) 上の LED の ON/OFF 状態を読み取ります。
 
 **Parameters**
 
-- `pin {Integer}` a number to identify the port (D2-D8) to which the LED bar is assigned to
+- `pin {Integer}` LED bar を接続するポート番号（D2〜D8）
 
-**Returns**: a number from `0` to `1023` to represent the binary state of all 10 LEDs of the LED bar
+**Returns**: 10 個の LED の状態を表す `0`〜`1023` の整数
 
 ---
 
 ##`grovepi.fourDigit_init(pin)`
-Initialize a [Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/).
+[Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/) を初期化します。
 
 **Parameters**
 
-- `pin {Integer}` the port (D2-D8) to which the 4-Digit display is set to
+- `pin {Integer}` 4-Digit Display を接続するポート番号（D2〜D8）
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.fourDigit_number(pin, value, leading_zero)`
-Set the [Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/) to display a number.
+[Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/) に数値を表示します。
 
 **Parameters**
 
-- `pin {Integer}` the port (D2-D8) to which the 4-Digit display is set to
-- `value {Integer}` a value between `0` and `9999` representing the number to be printed on the display
-- `leading_zero {Boolean}` whether to add leading zeros or not
+- `pin {Integer}` 4-Digit Display を接続するポート番号（D2〜D8）
+- `value {Integer}` 表示する数値（`0`〜`9999`）
+- `leading_zero {Boolean}` 先頭のゼロを埋めるかどうか
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.fourDigit_brightness(pin, brightness)`
-Set the brightness of the [Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/).
+[Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/) の明るさを設定します。
 
 **Parameters**
 
-- `pin {Integer}` the port (D2-D8) to which the 4-Digit display is set to
-- `brightness {Integer}` a number between `0` (for the darkest option) and `7` (for the brightest) representing the brightness of the display
+- `pin {Integer}` 4-Digit Display を接続するポート番号（D2〜D8）
+- `brightness {Integer}` 明るさ。`0`（最も暗い）〜`7`（最も明るい）
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.fourDigit_digit(pin, segment, value)`
-Set individual segment of the [Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/).
+[Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/) の特定セグメントに値を設定します。
 
 **Parameters**
 
-- `pin {Integer}` the port (D2-D8) to which the 4-Digit display is set to
-- `segment {Integer}` a number from `0` to `3` representing the segment
-- `value {Integer}` value of the segment - `0` to `15`
+- `pin {Integer}` 4-Digit Display を接続するポート番号（D2〜D8）
+- `segment {Integer}` 対象とする桁（`0`〜`3`）
+- `value {Integer}` セグメントに設定する値（`0`〜`15`）
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.fourDigit_segment(pin, segment, leds)`
-Set the individual LED segments of a digit of the [Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/).
+[Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/) の 1 桁分の LED セグメントをビットパターンで設定します。
 
 **Parameters**
 
-- `pin {Integer}` the port (D2-D8) to which the 4-Digit display is set to
-- `segment {Integer}` which segment of the display to modify (`0` to `3`)
-- `leds {Integer}` a number from `0` to `255` representing the binary activations of the selected `segment` - the 8th bit is the colon
+- `pin {Integer}` 4-Digit Display を接続するポート番号（D2〜D8）
+- `segment {Integer}` 変更対象の桁（`0`〜`3`）
+- `leds {Integer}` 選択した `segment` の各セグメントの ON/OFF を表す `0`〜`255` の値（8 bit のうち 8 bit 目がコロン）
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.fourDigit_score(pin, left, right)`
-Set values on either side of the [Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/).
-To the left and right values, leading zeros are added and the colon is lit up
+[Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/) の左右に値を表示します。左右の値には先頭ゼロが付与され、中央のコロンも点灯します。
 
 **Parameters**
 
-- `pin {Integer}` the port (D2-D8) to which the 4-Digit display is set to
-- `left {Integer}` value to be displayed on the left side of the display (takes values from `0` to `99`)
-- `right {Integer}` value to be displayed on the right side of the display (takes values from `0` to `99`)
+- `pin {Integer}` 4-Digit Display を接続するポート番号（D2〜D8）
+- `left {Integer}` 左側に表示する値（`0`〜`99`）
+- `right {Integer}` 右側に表示する値（`0`〜`99`）
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.fourDigit_monitor(pin, analog, duration)`
-Display the [analogRead](#grovepianalogreadpin) values onto the [Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/) for a given time.
+指定時間のあいだ、[analogRead](#grovepianalogreadpin) の値を [Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/) に表示します。
 
 **Parameters**
 
-- `pin {Integer}` the port (D2-D8) to which the 4-Digit display is set to
-- `analog {Integer}` the port (A0-A2) on which analog values are read from
-- `duration {Integer}` for how many seconds (`0` to `255`) the readings are to be displayed
+- `pin {Integer}` 4-Digit Display を接続するポート番号（D2〜D8）
+- `analog {Integer}` アナログ値を読み取るポート番号（A0〜A2）
+- `duration {Integer}` 表示時間（秒）。`0`〜`255`
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.fourDigit_on(pin)`
-Turn the whole [Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/) on.
+[Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/) 全体を点灯させます。
 
 **Parameters**
 
-- `pin {Integer}` the port (D2-D8) to which the 4-Digit display is set to
+- `pin {Integer}` 4-Digit Display を接続するポート番号（D2〜D8）
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.fourDigit_off(pin)`
-Turn the whole [Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/) off.
+[Grove 4-Digit Display](http://wiki.seeedstudio.com/Grove-4-Digit_Display/) 全体を消灯させます。
 
 **Parameters**
 
-- `pin {Integer}` the port (D2-D8) to which the 4-Digit display is set to
+- `pin {Integer}` 4-Digit Display を接続するポート番号（D2〜D8）
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.storeColor(red, green, blue)`
-Store a color for later use with the [Grove Chainable RGB LED](https://www.seeedstudio.com/Grove-Chainable-RGB-LED-p-850.html).
+[Grove Chainable RGB LED](https://www.seeedstudio.com/Grove-Chainable-RGB-LED-p-850.html) で後から使用するための色を保存します。
 
 **Parameters**
 
-- `red {Integer}` value from `0` to `255`
-- `green {Integer}` value from `0` to `255`
-- `blue {Integer}` value from `0` to `255`
+- `red {Integer}` `0`〜`255`
+- `green {Integer}` `0`〜`255`
+- `blue {Integer}` `0`〜`255`
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.chainableRgbLed_init(pin, numLeds)`
-Initialize a number of [chained LEDs](https://www.seeedstudio.com/Grove-Chainable-RGB-LED-p-850.html) on given port.
+指定ポート上の [chained LEDs](https://www.seeedstudio.com/Grove-Chainable-RGB-LED-p-850.html) を初期化します。
 
 **Parameters**
 
-- `pin {Integer}` the port (D2-D8) to which the Grove RGB LED(s) are connected to
-- `numLeds {Integer}` number of chained LEDs
+- `pin {Integer}` Grove RGB LED を接続するポート番号（D2〜D8）
+- `numLeds {Integer}` チェーン接続されている LED の数
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.chainableRgbLed_test(pin, numLeds, testColor)`
-Initialize [chained LEDs](https://www.seeedstudio.com/Grove-Chainable-RGB-LED-p-850.html) on given port and set a test color on all of them.
+指定ポート上の [chained LEDs](https://www.seeedstudio.com/Grove-Chainable-RGB-LED-p-850.html) を初期化し、すべての LED にテスト用の色を設定します。
 
 **Parameters**
 
-- `pin {Integer}` the port (D2-D8) to which the Grove RGB LED(s) are connected to
-- `numLeds {Integer}` number of chained LEDs
-- `testColor {Integer}` the color to use for all chained LEDs
+- `pin {Integer}` Grove RGB LED を接続するポート番号（D2〜D8）
+- `numLeds {Integer}` チェーン接続されている LED の数
+- `testColor {Integer}` すべての LED に適用する色
 
-    - `0` for black (or nothing)
-    - `1` for blue
-    - `2` for green
-    - `3` for cyan
-    - `4` for red
-    - `5` for magenta
-    - `6` for yellow
-    - `7` for white
+    - `0` — 黒（消灯）
+    - `1` — 青
+    - `2` — 緑
+    - `3` — シアン
+    - `4` — 赤
+    - `5` — マゼンタ
+    - `6` — 黄
+    - `7` — 白
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.chainableRgbLed_pattern(pin, pattern, whichLed)`
-Set one or more [chained LEDs](https://www.seeedstudio.com/Grove-Chainable-RGB-LED-p-850.html) to a stored color following a given pattern.
+指定パターンに従って、1 つまたは複数の [chained LEDs](https://www.seeedstudio.com/Grove-Chainable-RGB-LED-p-850.html) に保存済みの色を設定します。
 
 **Parameters**
 
-- `pin {Integer}` the port (D2-D8) to which the Grove RGB LED(s) are connected to
-- `pattern {Integer}`
+- `pin {Integer}` Grove RGB LED を接続するポート番号（D2〜D8）
+- `pattern {Integer}` パターンの種類
 
-    - `0` for this LED only
-    - `1` for all LEDs except this LED
-    - `2` this LED and all LEDs inwards
-    - `3` this LED and all LEDs outwards
+    - `0` — この LED のみ
+    - `1` — この LED 以外のすべて
+    - `2` — この LED および内側のすべての LED
+    - `3` — この LED および外側のすべての LED
 
-- `whichLed {Integer}` the index of the LED you wish to set counting outwards from the GrovePi starting with `0`
+- `whichLed {Integer}` GrovePi から外側に向かって数えたときの LED インデックス（`0` 始まり）
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.chainableRgbLed_modulo(pin, offset, divisor)`
-Set one or more [chained LEDs](https://www.seeedstudio.com/Grove-Chainable-RGB-LED-p-850.html) to a stored color following the "pattern" of the modulo operation.
+割り算の剰余パターンに従って、1 つまたは複数の [chained LEDs](https://www.seeedstudio.com/Grove-Chainable-RGB-LED-p-850.html) に保存済みの色を設定します。
 
 **Parameters**
 
-- `pin {Integer}` the port (D2-D8) to which the Grove RGB LED(s) are connected to
-- `offset {Integer}` the index of the LED you want to start at (`0` is for the 1st LED)
-- `divisor {Integer}` sets the color to those LEDs of whose indexes divided by `divisor` have the remainder set to `0` - for `divisor=1` every LED gets set, but for `divisor=2` every 2nd LED gets set  
+- `pin {Integer}` Grove RGB LED を接続するポート番号（D2〜D8）
+- `offset {Integer}` 開始位置とする LED のインデックス（最初の LED は `0`）
+- `divisor {Integer}` インデックスを `divisor` で割ったときの剰余が 0 になる LED に色を設定します。例えば `divisor=1` なら全 LED、`divisor=2` なら 2 個おきの LED が設定されます。
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.chainableRgbLed_setLevel(pin, level, reverse)`
-Set one or more [chained LEDs](https://www.seeedstudio.com/Grove-Chainable-RGB-LED-p-850.html) to a stored color similar to a bar graph.
+バーグラフのように、保存済みの色を 1 つまたは複数の [chained LEDs](https://www.seeedstudio.com/Grove-Chainable-RGB-LED-p-850.html) に対してレベル表示します。
 
 **Parameters**
 
-- `pin {Integer}` the port (D2-D8) to which the Grove RGB LED(s) are connected to
-- `level {Integer}` the number of LEDs you want to set to the stored color
-- `reverse {Integer}` `0` when counting outwards from the GrovePi or `1` when it's the other way (from the most outward LED inwards)
+- `pin {Integer}` Grove RGB LED を接続するポート番号（D2〜D8）
+- `level {Integer}` 保存済みの色を点灯させる LED の個数
+- `reverse {Integer}` `0` で GrovePi から外側に向かってカウント、`1` で外側から内側に向かってカウント
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`

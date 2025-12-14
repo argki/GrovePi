@@ -1,22 +1,22 @@
 ## Flashing the Firmware
 
-To flash the firmware, you must first have the GrovePi library/repository installed so for this you must follow the [Getting Started guide](quickstart.md#how-to-install).
+ファームウェアを書き込むには、まず GrovePi のライブラリ／リポジトリが Raspberry Pi にインストールされている必要があります。そのためには、先に [Getting Started ガイド](quickstart.md#how-to-install) に従ってセットアップを行ってください。
 
-Once the library is installed on the Raspberry Pi, run the following commands to have the firmware flashed onto the GrovePi:
+ライブラリが Raspberry Pi にインストールされたら、次のコマンドを実行して GrovePi にファームウェアを書き込みます。
 
 ```bash
 cd ~/Dexter/GrovePi/Firmware
 bash firmware_update.sh
 ```
-This updates you to the latest version of the firmware which is the `1.4.0`.
+これにより、ファームウェアは最新バージョン（`1.4.0`）に更新されます。
 
 ---
 **NOTE TO OTHER LIBRARIES**
 
-Because the `1.3.0` firmware was recently released, lots of other libraries written in other languages other than Python are yet to be updated, so
-they need to run on an older version of the firmware, specifically the `1.2.7`.
+ファームウェア `1.3.0` は比較的最近リリースされたため、Python 以外の言語で書かれた多くのライブラリは、まだこのバージョンに対応していません。そのため、そうしたライブラリを使う場合は、古いファームウェア（特に `1.2.7`）で動かす必要があります。
 
-The `1.2.7` version can be found in `~/Dexter/GrovePi/Firmware/Archive` as `grove_pi_v1_2_7.cpp.hex`. If you need to run on this older version, follow these steps to burn the firmware:
+`1.2.7` のファームウェアは、`~/Dexter/GrovePi/Firmware/Archive` ディレクトリ内の `grove_pi_v1_2_7.cpp.hex` として保存されています。もしこの古いバージョンを使いたい場合は、次の手順でファームウェアを書き込んでください。
+
 ```bash
 mv ~/Dexter/GrovePi/Firmware/grove_pi_firmware.hex ~/Dexter/GrovePi/Firmware/grove_pi_v1_3_0.hex.bak
 cp ~/Dexter/GrovePi/Firmware/Archive/grove_pi_v1_2_7.cpp.hex ~/Dexter/GrovePi/Firmware/grove_pi_firmware.hex
@@ -27,43 +27,47 @@ bash firmware_update.sh
 
 ## Running Tests
 
-To run the entire suite of tests for the GrovePi follow these bash instructions:
+GrovePi のテスト一式を実行するには、次のようにします。
+
 ```bash
 cd ~/Dexter/GrovePi/Troubleshooting
 sudo bash all_tests.sh
 ```
 
-At the end of this process you'll get a `log.txt` file on your Desktop at `~/Desktop/log.txt`.
+処理が完了すると、`~/Desktop/log.txt` に `log.txt` ファイルが作成されます。
 
-Also, to see with which version of the firmware the library installed on the Raspberry Pi works with you can go to `~/Dexter/GrovePi` directory and run:
+また、Raspberry Pi 上にインストールされているライブラリがどのバージョンのファームウェアに対応しているかを確認したい場合は、`~/Dexter/GrovePi` ディレクトリに移動して次のコマンドを実行します。
+
 ```bash
 python grovepi.py
 ```
-This should output a version number (of the GrovePi's firmware). Older versions of the firmware (<=`v1.2.7`) won't get displayed when calling `python grovepi.py`.
+
+これにより、GrovePi のファームウェアバージョンが表示されます。古いファームウェア（`v1.2.7` 以下）の場合は、`python grovepi.py` を実行してもバージョンは表示されません。
+
 ```bash
 pi@raspberrypi:~ $ python grovepi.py
 library supports this fw versions: 1.4.0
 ```
 
-To see which is the version of the current firmware loaded on the GrovePi you can either run the above test (`... all_test.sh`) from the `Troubleshooting/` directory or you can run these commands:
+現在 GrovePi に書き込まれているファームウェアのバージョンを知りたい場合は、上記のテスト（`... all_test.sh`）を `Troubleshooting/` ディレクトリから実行するか、次のようなコードを実行します。
+
 ```python
 import grovepi
 print(grovepi.version())
 ```
 
-There are also cases when the GrovePi doesn't respond to requests. In this situation, you would normally see an exception appearing in Python. More often than not, these can be the source of problems:
+まれに GrovePi が反応しなくなるケースがあります。このような場合、Python では例外が発生することが多いです。よくある原因としては次のようなものがあります。
 
-- A non-present firmware on the GrovePi.
-- A mismatch of versions between the firmware and the library on the Raspberry Pi.
+- GrovePi にファームウェアが書き込まれていない  
+- Raspberry Pi 上のライブラリと GrovePi 上のファームウェアのバージョンが一致していない
 
-In both of these situations, re-flashing the firmware is all it's needed.
+いずれの場合も、ファームウェアを書き直すことで解消されることがほとんどです。
 
 ## Building the Firmware
 
-There may be cases where additional modification to the firmware is required to accommodate someone's particular requirements. In this case,
-building the firmware and then uploading it is crucial. During our production, we use [PlatformIO](https://platformio.org/) along with [Atom IDE](https://atom.io/).
+特定の用途に合わせてファームウェアを変更したい場合、自分でビルドしてから書き込む必要があります。Dexter Industries の製造工程では、[PlatformIO](https://platformio.org/) と [Atom IDE](https://atom.io/) を組み合わせて利用しています。
 
-Once you get them both installed on your machine, open Atom IDE and add as a project the `/Firmware/Source/grovepi` directory. The added directory will have the following structure:
+両方をインストールしたら、Atom IDE で `/Firmware/Source/grovepi` ディレクトリをプロジェクトとして追加します。追加されたプロジェクトは以下のような構成になっています。
 
 - `lib/`
 - `src/`
@@ -72,11 +76,12 @@ Once you get them both installed on your machine, open Atom IDE and add as a pro
 - `extra_script.py`
 - `platformio.ini`
 
-Next, click on the build button or use **ALT-CTRL-B** key combination to build the firmware with PlatformIO. Once that it's done, head over to `/Firmware/Source/grovepi/.pioenvs/grovepi` directory and notice the `firmware.hex`. That's the firmware that was just built. You can then burn that to your GrovePi.
+その後、ビルドボタンをクリックするか、**ALT-CTRL-B** キーを押して PlatformIO でファームウェアをビルドします。ビルドが完了すると、`/Firmware/Source/grovepi/.pioenvs/grovepi` ディレクトリに `firmware.hex` が生成されます。これが生成されたファームウェアであり、GrovePi に書き込むことができます。
 
 ## Resetting the GrovePi
 
-To reset the GrovePi from your Raspberry Pi, run the following command provided you have installed the GrovePi library on your image and configured the `linuxgpio` programmer in `avrdude.conf`:
+Raspberry Pi から GrovePi をリセットするには、GrovePi ライブラリがインストールされており、かつ `avrdude.conf` で `linuxgpio` プログラマが設定されていることを前提に、次のコマンドを実行します。
+
 ```bash
 avrdude -c linuxgpio -p m328p
 ```

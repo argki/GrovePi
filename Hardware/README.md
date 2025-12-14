@@ -1,14 +1,14 @@
 #GrovePi+ 
-GrovePi+ is an electronics board designed by Dexter Industries that you can connect to hundreds of different sensors, so you can program them to monitor, control, and automate devices in your life. 
+GrovePi+ は Dexter Industries が設計したエレクトロニクスボードで、数百種類のセンサーを接続して、身の回りのデバイスを監視・制御・自動化するプログラムを作ることができます。
 
 ![GrovePi+](https://github.com/DexterInd/GrovePi/blob/master/Hardware/GrovePi%20Graphical%20Datasheet.jpg)
 
 #GrovePi Zero
-GrovePi+ is an electronics board designed by Dexter Industries that makes electronics prototyping with the Raspberry Pi Zero easy and fast.  With the GrovePi Zero you can start your connected device projects in minutes.
+GrovePi Zero は、Raspberry Pi Zero でのエレクトロニクス試作を簡単かつ高速に行えるよう、Dexter Industries が設計したボードです。GrovePi Zero を使えば、数分でコネクテッドデバイスのプロジェクトを始めることができます。
 
 ![GrovePi Zero](https://github.com/DexterInd/GrovePi/blob/master/Hardware/GrovePiZero%20Graphical%20Datasheet.jpg)
 
-See more about the GrovePi here:  http://www.dexterindustries.com/grovepi/
+GrovePi についての詳細はこちら:  http://www.dexterindustries.com/grovepi/
 Copyright (C) 2016  Dexter Industries 
 
 

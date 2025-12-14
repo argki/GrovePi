@@ -1,28 +1,24 @@
-
 ![GrovePi+ Ports](img/rpi_hw.jpg)
 
 ## Port Layout
 
-The GrovePi+ has multiple types of ports:
+GrovePi+ には複数種類のポートがあります。
 
-1. _Analog_ ports - **A0**, **A1**, **A2** - with these ports you can read the voltage output of sensors. In this diagram, these ports are coloured in blue.
-When using the ports with our API, only use integers to designate the port of your choice such as `0`, `1` or `2`.
+1. _Analog_ ポート — **A0**、**A1**、**A2**  
+   これらのポートでは、センサーの出力電圧を読み取ることができます。図では青色で示されています。API から使用する際は、`0`、`1`、`2` のような整数でポート番号を指定します。
 
-2. _Digital_ ports - **D2**, **D3**, **D4**, **D5**, **D6**, **D7** ,**D8** - with these ports you can read and write digital values of 1 or 0. In the above
-diagram, these ports are coloured in orange. When using the ports with our API, only use integers to designate the port of your choice such as `2`, `3` ... `8`.
+2. _Digital_ ポート — **D2**、**D3**、**D4**、**D5**、**D6**、**D7**、**D8**  
+   これらのポートでは、1 または 0 のデジタル値を読み書きできます。上の図ではオレンジ色で示されています。API から使用する際は、`2`〜`8` のような整数でポート番号を指定します。
 
-3. _PWM_ port - **3**, **5**, **6**, **9** - with these ports you can set a specific voltage output between 0V and 5V by using the concept of duty cycle / PWN / PPM.
+3. _PWM_ ポート — **3**、**5**、**6**、**9**  
+   デューティ比（duty cycle）/ PWM / PPM の考え方を使って、0V〜5V の範囲で任意の出力電圧を設定できます。
 
-4. _I2C_ ports - which are coloured in yellow and have the SDA & SCL acronyms written. The master of this connection is the Raspberry Pi.
+4. _I2C_ ポート — 黄色で示され、`SDA` と `SCL` の表記があります。この接続のマスターは Raspberry Pi です。
 
-5. _Serial_ ports - which are found in the bottom-left corner of the above diagram. _SERIAL_ port is the GrovePi's port whereas _RPISER_ is a bypass to the Raspberry Pi's port,
-which has a level converter implemented to accept 5V signals.
+5. _Serial_ ポート — 図の左下にあり、`SERIAL` と `RPISER` の 2 種類があります。`SERIAL` は GrovePi のシリアルポートで、`RPISER` は Raspberry Pi のシリアルポートへのバイパスです。`RPISER` 側には 5V レベルを受けられるようレベルコンバータが入っています。
 
 ## Numbering System
 
-Most of the sensors/actuators that we support have the signal line on the outwards of the grove port. For instance,
-the [Grove LED](https://www.seeedstudio.com/Grove-Red-LED-p-1142.html) has the signal line on the edge of the grove port which corresponds to port number 4 on port name _D4_,
-so for us this was the reason why the port names we have given actually depend on where the signal lines mostly reside.
+多くのセンサー／アクチュエータでは、Grove ポート側の外側のピンが信号線になっています。例えば [Grove LED](https://www.seeedstudio.com/Grove-Red-LED-p-1142.html) では、Grove ポートの外側のピンが信号線であり、これはポート名 `D4` における「4」に対応します。このため、ポート名は主に信号線の位置に基づいて付けられています。
 
-Looking at a typical grove cable that comes with any GrovePi kit, the signal line is generally the yellow wire and the white
-wire is left unused. As you might have guessed, the yellow wire is the outermost wire of the grove cable.
+GrovePi キットに同梱されている典型的な Grove ケーブルを見ると、信号線は一般的に黄色のワイヤで、白いワイヤは未使用のことが多いです。想像がつくように、黄色のワイヤがケーブルの一番外側にある線です。

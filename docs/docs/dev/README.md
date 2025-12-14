@@ -1,19 +1,23 @@
 # Development Notes
 
-To fire up a development environment for the documentation, you need to build this docker file first
-```
+このドキュメントの開発用環境を立ち上げるには、まず次の Dockerfile からイメージをビルドします。
+
+```bash
 docker image build -t dexterind/grovepi-docs .
 ```
 
-Once you have that, you need to fire up the container. First make sure you are running this from the root of this repository and then run
-```
+イメージができたら、コンテナを起動します。必ずこのリポジトリのルートディレクトリで実行してください。
+
+```bash
 docker container run -v $(pwd)/docs:/docs -it --rm -p 80:8000 dexterind/grovepi-docs
 ```
 
-To have the documentation built run from the root of this repository
-```
+ドキュメントをビルドするには、リポジトリのルートディレクトリから次のコマンドを実行します。
+
+```bash
 docker container run -v $(pwd)/docs:/docs -it --rm dexterind/grovepi-docs mkdocs build -c
 ```
-and wait for it to exit the process and then copy the contents of the newly created directory `site` and place it into the `/docs` directory.
 
-Enjoy developing and when you're done with it, build the documentation and save the statics in the docs folder.
+処理が終了したら、新しく生成された `site` ディレクトリの中身を `/docs` ディレクトリにコピーします。
+
+あとは自由にドキュメントを編集し、作業が終わったらビルドして生成物を `docs` フォルダに保存してください。

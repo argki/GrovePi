@@ -2,69 +2,65 @@
 
 ### Setting It Up
 
-On newer versions of the Raspberry Pi, the hardware serial port `/dev/ttyAMAO` which is used in our library, is actually set to be used by the bluetooth module, leaving the software implementation `/dev/ttyS0` (aka mini UART) to the actual pins of the serial line.
-The problem with this mini UART is that it's too slow for what we need, so we have to switch them so that the hardware serial points to our serial pins.  
+新しめの Raspberry Pi では、ライブラリ内で使用しているハードウェアシリアルポート `/dev/ttyAMA0` が Bluetooth モジュール用に割り当てられており、シリアルピン側にはソフトウェア実装の `/dev/ttyS0`（mini UART）が割り当てられています。
+しかし、この mini UART は本ライブラリの用途には速度が不十分なため、ハードウェアシリアルが実際のシリアルピンを指すように入れ替える必要があります。  
 
-To do that, add/modify these lines to `/boot/config.txt`
+そのためには、`/boot/config.txt` に次の行を追加または修正します。
+
 ```bash
 dtoverlay=pi3-miniuart-bt
 dtoverlay=pi3-disable-bt
 enable_uart=1
 ```
 
-Next, remove the 2 console statements from `/boot/cmdline.txt`.
-Initially, `/boot/cmdline.txt` might look this way:
-```
+次に、`/boot/cmdline.txt` から 2 つのコンソール関連の記述を削除します。
+初期状態の `/boot/cmdline.txt` は次のようになっているかもしれません。
+
+```text
 dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes root wait
 ```
-After you remove the 2 statements, it should be like this:
-```
+
+2 つのコンソール記述を削除すると、次のようになります。
+
+```text
 dwc_otg.lpm_enable=0 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes root wait
 ```
 
-Once you've done these 2 steps from above, a reboot will be required. Do it now, and then proceed to the next section.
+ここまでの 2 ステップが完了したら、再起動が必要です。再起動したうえで、次のセクションに進んでください。
 
-For more information on how the serial ports are set up, you can [read this article](https://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/#Disabling_the_Console).
+シリアルポートの設定方法について詳しく知りたい場合は、[この解説記事](https://spellfoundry.com/2016/05/29/configuring-gpio-serial-port-raspbian-jessie-including-pi-3/#Disabling_the_Console) を参照してください。
 
 ### Running it
 
-To run the GPS script, you need to have followed the instructions in the previous section and have connected the [Grove GPS Module](http://www.seeedstudio.com/depot/Grove-GPS-p-959.html?cPath=25_130) to the **RPIser** port of the GrovePi.
+GPS スクリプトを実行するには、前セクションの手順に従って設定を済ませたうえで、[Grove GPS Module](http://www.seeedstudio.com/depot/Grove-GPS-p-959.html?cPath=25_130) を GrovePi の **RPIser** ポートに接続しておきます。
 
-The script should be launched with Python 3.
+スクリプトは Python 3 で起動します。
+
 ```bash
 sudo python3 dextergps.py
 ```
 
-The output of any of these 2 commands looks this way:
+出力例は次のようになります。
+
 ```bash
 ['$GPGGA', '150954.000', '4520.7858', 'N', '02557.6659', 'E', '1', '5', '2.84', '76.9', 'M', '36.1', 'M', '', '*6E']
 ['$GPGGA', '150955.000', '4520.7859', 'N', '02557.6655', 'E', '1', '5', '2.84', '77.0', 'M', '36.1', 'M', '', '*6A']
-['$GPGGA', '150956.000', '4520.7861', 'N', '02557.6652', 'E', '1', '5', '2.85', '77.0', 'M', '36.1', 'M', '', '*64']
-['$GPGGA', '150957.000', '4520.7861', 'N', '02557.6645', 'E', '1', '4', '2.90', '77.1', 'M', '36.1', 'M', '', '*67']
-['$GPGGA', '150958.000', '4520.7861', 'N', '02557.6645', 'E', '1', '4', '2.90', '77.1', 'M', '36.1', 'M', '', '*68']
-['$GPGGA', '150959.000', '4520.7861', 'N', '02557.6645', 'E', '1', '4', '2.90', '77.1', 'M', '36.1', 'M', '', '*69']
-['$GPGGA', '151000.000', '4520.7861', 'N', '02557.6645', 'E', '1', '4', '2.90', '77.1', 'M', '36.1', 'M', '', '*6D']
-['$GPGGA', '151001.000', '4520.7861', 'N', '02557.6645', 'E', '1', '4', '2.90', '77.1', 'M', '36.1', 'M', '', '*6C']
-['$GPGGA', '151002.000', '4520.7863', 'N', '02557.6618', 'E', '1', '4', '2.90', '77.5', 'M', '36.1', 'M', '', '*61']
-['$GPGGA', '151003.000', '4520.7864', 'N', '02557.6612', 'E', '1', '4', '2.90', '77.6', 'M', '36.1', 'M', '', '*6E']
-['$GPGGA', '151004.000', '4520.7865', 'N', '02557.6606', 'E', '1', '4', '2.90', '77.6', 'M', '36.1', 'M', '', '*6D']
-['$GPGGA', '151005.000', '4520.7865', 'N', '02557.6597', 'E', '1', '4', '2.90', '77.6', 'M', '36.1', 'M', '', '*67']
-['$GPGGA', '151006.000', '4520.7865', 'N', '02557.6588', 'E', '1', '4', '2.90', '77.6', 'M', '36.1', 'M', '', '*6A']
+...
 ```
 
 ### Regarding the Library
 
-**gps.lat** and **gps.NS** go hand in hand, so do **gps.lon** and **gps.EW**
+**gps.lat** と **gps.NS** はセットで扱われ、同様に **gps.lon** と **gps.EW** もセットで扱われます。
 
-**gps.latitude** and **gps.longitude** are calculated to give you a Google Map appropriate format and make use of negative numbers to indicate either South or West
+**gps.latitude** と **gps.longitude** は、Google Map に適した形式になるよう計算された値で、南緯や西経を表す場合は負の値になります。
 
 *Note*:
-You would only get good data when fix is 1 and you have 3 or more satellites in view. You might have to take the module near a window with access to open sky for good results
+fix が 1 かつ 3 つ以上の衛星が見えている場合にのみ、良好なデータが取得できます。良い結果を得るには、モジュールを窓際など空が開けた場所に近づける必要があるかもしれません。
 
 ### Old GPS Scripts
 
-`dextergps.py` is the new go-to script for getting values off of the Grove GPS module. The old ones that are no longer used but are kept in here for legacy reasons are:
+`dextergps.py` は Grove GPS モジュールから値を取得するための新しい標準スクリプトです。古いスクリプトは、もはや使用されていませんが、互換性維持のために残されています。
 
-* [grove_gps_data.py](grove_gps_data.py)
-* [grove_gps_hardware_test.py](grove_gps_hardware_test.py)
-* [GroveGPS.py](GroveGPS.py)
+- [grove_gps_data.py](grove_gps_data.py)
+- [grove_gps_hardware_test.py](grove_gps_hardware_test.py)
+- [GroveGPS.py](GroveGPS.py)

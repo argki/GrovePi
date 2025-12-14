@@ -1,10 +1,10 @@
 GrovePi
 =======
 
-GrovePi is an open source platform for connecting Grove Sensors to the Raspberry Pi.
+GrovePi は、Grove センサーを Raspberry Pi に接続するためのオープンソース・プラットフォームです。
 
 Started 2013/10/04
-See more at the [GrovePi Site](http://dexterindustries.com/GrovePi/)
+より詳しい情報は [GrovePi Site](http://dexterindustries.com/GrovePi/) を参照してください。  
 [Dexter Industries](http://www.dexterindustries.com)
 
 ## License

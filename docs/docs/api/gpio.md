@@ -1,72 +1,69 @@
 #API - GPIO Functions
 
-In this section the Python API reference for GPIO functions is described. This library is supported on both major versions
-of Python: 2.x and 3.x.
+このセクションでは、GPIO 関連の Python API リファレンスを説明します。このライブラリは Python 2.x / 3.x の両方のメジャーバージョンに対応しています。
 
 ---
 **IMPORTANT**
 
-This library and the other ones too are not thread-safe. You cannot call the GrovePi from multiple threads or processes
-as that will put the GrovePi into a broken state.
+このライブラリ（および他のライブラリ）はスレッドセーフではありません。複数のスレッドやプロセスから同時に GrovePi を呼び出すことはできません。そのような使い方をすると GrovePi が不正な状態になります。
 
-In case you need to reset the GrovePi from your Raspberry Pi, [check this section](../fw/#resetting-the-grovepi).
+Raspberry Pi から GrovePi をリセットする必要がある場合は、[このセクション](../fw/#resetting-the-grovepi) を参照してください。
 
-The functions don't verify if the input parameters are valid and therefore the parameters have to be verified/validated before that.
-Calling a function with improper parameters can result in an undefined behavior for the GrovePi.
+各関数は引数が妥当かどうかを検証しません。そのため、呼び出し側で事前に引数の検証・チェックを行う必要があります。不正な引数で関数を呼び出すと、GrovePi の動作が未定義になる可能性があります。
 ---
 
 ##`grovepi.digitalRead(pin)`
-Reads whether a port's input is set high or low on the GrovePi.
+GrovePi 上の指定ポートの入力が HIGH か LOW かを読み取ります。
 
 **Parameters**
 
-- `pin {Integer}` a number to identify the port (D2-D8) from which to do the reading
+- `pin {Integer}` 読み取り元のポート番号（D2〜D8）
 
-**Returns**: `0` or `1` depending on the input value
+**Returns**: 入力値に応じて `0` または `1`
 
 ---
 
 ##`grovepi.digitalWrite(pin, value)`
-Sets the output value to either `0` or `1` to a digital port on the GrovePi.
+GrovePi 上のデジタルポートに `0` または `1` の出力値を設定します。
 
 **Parameters**
 
-- `pin {Integer}` a number to identify the port (D2-D8) to which to do the writing
-- `value {Integer}` either `0` for 0 volts or `1` for maximum output voltage (usually 5 volts)
+- `pin {Integer}` 出力先のポート番号（D2〜D8）
+- `value {Integer}` 出力する値。`0` は 0V、`1` は最大出力電圧（通常 5V）。
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.analogRead(pin)`
-Detect an input voltage as a value from a given port on the GrovePi.
+GrovePi 上の指定ポートから入力電圧を値として読み取ります。
 
 **Parameters**
 
-- `pin {Integer}` a number to identify the port (A0-A2) from which to do the reading
+- `pin {Integer}` 読み取り元のポート番号（A0〜A2）
 
-**Returns**: a 10-bit `{Integer}` number that maps to the input voltage on the port
+**Returns**: 入力電圧に対応する 10 bit の `{Integer}` 値
 
 ---
 
 ##`grovepi.analogWrite(pin, value)`
-Set an output voltage on a PWM-enabled port by mapping the value to the desired voltage on the GrovePi.
+GrovePi 上の PWM 対応ポートに対して、指定値に対応する出力電圧を設定します。
 
 **Parameters**
 
-- `pin {Integer}` a number to identify the port (ports 3, 5, 6, 9) to which to do the writing
-- `value {Integer}` an 8-bit number that maps from 0V to the referenced voltage of the GrovePi (5V)
+- `pin {Integer}` 出力先のポート番号（3, 5, 6, 9）
+- `value {Integer}` 0V〜参照電圧（5V）に対応する 8 bit の値
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`
 
 ---
 
 ##`grovepi.pinMode(pin, mode)`
-Sets a port to be either an OUTPUT or an INPUT port on the GrovePi.
+GrovePi 上のポートを OUTPUT もしくは INPUT として設定します。
 
 **Parameters**
 
-- `pin {Integer}` a number to identify the port (D2-D8) to which to do the change
-- `mode {String}` `"OUTPUT"` for writing values or `"INPUT"` for reading
+- `pin {Integer}` 設定対象のポート番号（D2〜D8）
+- `mode {String}` 出力に使う場合は `"OUTPUT"`、入力に使う場合は `"INPUT"`
 
-**Returns**: `1` all the time
+**Returns**: 常に `1`

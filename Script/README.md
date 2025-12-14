@@ -1,16 +1,18 @@
 ## Installing
 
-You need internet access for the following step(s).
+以下の手順にはインターネット接続が必要です。
 
-The quickest way for installing the GrovePi using the locally cloned scripts is to enter the following commands (assuming the combined `DexterInd` repository has been cloned into the `pi` user's home directory as `~/DexterInd`):
+ローカルに clone 済みのスクリプトを使って GrovePi を最も手早くインストールするには、（`DexterInd` リポジトリ一式が `pi` ユーザーのホームディレクトリ `~/DexterInd` に clone 済みであることを前提として）次のコマンドを実行します。
+
 ```bash
 cd ~/DexterInd/GrovePi/Script
 bash update_grovepi.sh
 ```
 
-By default, the GrovePi package is installed system-wide, [script_tools](https://github.com/DexterInd/script_tools) and [RFR_Tools](https://github.com/DexterInd/RFR_Tools) are updated each time the script is ran.
+デフォルトでは、GrovePi パッケージはシステム全体（system-wide）にインストールされ、[script_tools](https://github.com/DexterInd/script_tools) と [RFR_Tools](https://github.com/DexterInd/RFR_Tools) はこのスクリプトを実行するたびに更新されます。
 
-An example using options appended to the command can be:
+オプションを付けて実行する例は次のとおりです。
+
 ```bash
 cd ~/DexterInd/GrovePi/Script
 bash update_grovepi.sh --user-local --no-update-aptget --no-dependencies
@@ -18,36 +20,37 @@ bash update_grovepi.sh --user-local --no-update-aptget --no-dependencies
 
 ## Command Options
 
-The options that can be appended to this command are:
+このコマンドに付けられるオプションは次のとおりです。
 
-* `--no-update-aptget` - to skip using `sudo apt-get update` before installing dependencies. For this to be useful, `--no-dependencies` has to be not used. Applies to RFR_Tools and the GrovePi.
-* `--bypass-rfrtools` - skips installing RFR_Tools completely.
-    * `--bypass-python-rfrtools` - skips installing/updating the python package for  [RFR_Tools](https://github.com/DexterInd/RFR_Tools).
-    * `--bypass-gui-installation` - skips installing the GUI packages/dependencies from [RFR_Tools](https://github.com/DexterInd/RFR_Tools).
-* `--no-dependencies` - skip installing any dependencies for the GrovePi. It's supposed to be used on each consecutive update after the initial install has gone through.
-* `--user-local` - install the python package for the GrovePi in the home directory of the user. This doesn't require any special read/write permissions: the actual command used is (`python3 setup.py install --force --user`).
-* `--env-local` - install the python package for the GrovePi within the given environment without elevated privileges: the actual command used is (`python3 setup.py install --force`).
-* `--system-wide` - install the python package for the GrovePi within the sytem-wide environment with `sudo`: the actual command used is (`sudo python3 setup.py install --force`).
+* `--no-update-aptget` — 依存パッケージのインストール前に `sudo apt-get update` を実行しないようにします。このオプションを有効にする場合は、`--no-dependencies` を同時に指定しないよう注意してください。RFR_Tools と GrovePi の両方に適用されます。
+* `--bypass-rfrtools` — RFR_Tools のインストールを完全にスキップします。
+  * `--bypass-python-rfrtools` — [RFR_Tools](https://github.com/DexterInd/RFR_Tools) の Python パッケージのインストール／更新をスキップします。
+  * `--bypass-gui-installation` — [RFR_Tools](https://github.com/DexterInd/RFR_Tools) が必要とする GUI 関連パッケージ／依存関係のインストールをスキップします。
+* `--no-dependencies` — GrovePi 用の依存パッケージのインストールをスキップします。初回インストールが完了した後の、2 回目以降の更新時に使用することを想定しています。
+* `--user-local` — GrovePi の Python パッケージをユーザーのホームディレクトリにインストールします。特別な権限は不要です。内部的には `python3 setup.py install --force --user` が実行されます。
+* `--env-local` — 現在の環境内に、特権なしで GrovePi の Python パッケージをインストールします。内部的には `python3 setup.py install --force` が実行されます。
+* `--system-wide` — システム全体に GrovePi の Python パッケージを `sudo` 付きでインストールします。内部的には `sudo python3 setup.py install --force` が実行されます。
 
-Important to remember is that `--user-local`, `--env-local` and `--system-wide` options are all mutually-exclusive - they cannot be used together.
-As a last thing, different versions of it can be pulled by appending a corresponding branch name or tag.
+`--user-local` / `--env-local` / `--system-wide` は **相互排他的** であり、同時に指定することはできません。最後に、異なるバージョンを使いたい場合は、対応するブランチ名やタグ名を引数として指定することで取得できます。
 
 ## Minimal Installation
 
-Now, if you only want the absolute minimum in order to get going with the GrovePi, you can run this command:
+GrovePi を最低限動かすために必要なものだけをインストールしたい場合は、次のコマンドを実行します。
+
 ```bash
 cd ~/DexterInd/GrovePi/Script
 bash update_grovepi.sh --bypass-gui-installation
 ```
 
-This will only get you installed the GrovePi dependencies and nothing else. You still can use options such as `--user-local` or `--env-local` if you are working with a different kind of environment. Keep in mind that `--system-wide` is selected by default.
+このコマンドは、GrovePi の依存関係のみをインストールし、それ以外は行いません。仮想環境など別の環境で作業している場合は、`--user-local` や `--env-local` などのオプションを組み合わせて使うこともできます。なお、デフォルトでは `--system-wide` が選択されています。
  
 ## Subsequent Updates
 
-If the GrovePi has been installed either by using the full command or the one for the minimal installation, this means you have all the packages installed already and all dependencies put in. Therefore, on subsequent installation, you can skip installing any dependency and instead just reinstall the python package of the GrovePi. To do this, you can run this command:
+GrovePi をフルインストール用のコマンド、またはミニマルインストール用のコマンドのいずれかで一度インストールしていれば、必要なパッケージや依存関係はすでに入っています。そのため、2 回目以降の更新では依存関係のインストールをスキップし、GrovePi の Python パッケージだけを再インストールすることができます。その場合は次のコマンドを実行します。
+
 ```bash
 cd ~/DexterInd/GrovePi/Script
 bash update_grovepi.sh --bypass-rfrtools --no-dependencies
 ```
 
-Or if this is too complex, you can always stick to the command meant for the full installation or the minimal one.
+コマンドが複雑に感じる場合は、常にフルインストールまたはミニマルインストール用のコマンドをそのまま使い続けても構いません。

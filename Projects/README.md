@@ -1,37 +1,39 @@
 ## **GrovePi Projects Readme**
-GrovePi is an electronics board that you can connect to hundreds of different sensors, so you can program them to monitor, control, and automate devices in your life.  [View Product Details here.](http://www.dexterindustries.com/grovepi/)
 
-- **Advanced_RGB_LCD_TempAndHumidity**: Changes the color of the RGB color LCD depending on the temperature. (Works with the GrovePi starter kit)
+GrovePi は、数百種類のセンサーを接続できるエレクトロニクスボードで、身の回りのデバイスを監視・制御・自動化するプログラムを簡単に作ることができます。  
+[製品の詳細はこちら](http://www.dexterindustries.com/grovepi/)。
 
-- **Button_And_Buzzer**: The buzzer makes a sound when the button is pressed. (Works with the GrovePi starter kit)
+- **Advanced_RGB_LCD_TempAndHumidity**: 温度に応じて RGB LCD の色を変化させます。（GrovePi スターターキット対応）
 
-- **home_temp_humi_display**: Shows the temperature and humidity on Grove I2C OLED.
+- **Button_And_Buzzer**: ボタンが押されるとブザーが鳴ります。（GrovePi スターターキット対応）
 
-- **Home_Weather_Display**: Shows the temperature and humidity on Grove RGB LCD. (Works with the GrovePi starter kit)
+- **home_temp_humi_display**: Grove I2C OLED に温度と湿度を表示します。
 
-- **IOT**: Plots the data from various grove sensors on Xively. (Works with the GrovePi starter kit)
+- **Home_Weather_Display**: Grove RGB LCD に温度と湿度を表示します。（GrovePi スターターキット対応）
 
-- **LED Fade**: Changed the brightness of a LED from the value read from a potentiometer.(Works with the GrovePi starter kit)
+- **IOT**: 複数の Grove センサーから取得したデータを Xively にプロットします。（GrovePi スターターキット対応）
 
-- **OLED_Weather Display**: Fetch the live weather data from the internet and print on the OLED display
+- **LED Fade**: ポテンショメータから読み取った値に応じて LED の明るさを変化させます。（GrovePi スターターキット対応）
 
-- **OLED_Weather Station**: Get weather data from the internet and the DHT sensor and print on the OLED
+- **OLED_Weather Display**: インターネットから取得した最新の天気データを OLED ディスプレイに表示します。
 
-- **Open_Wifi_Finder**: Finds open WiFi networks and prints on the Grove RGB LCD. (Works with the GrovePi starter kit)
+- **OLED_Weather Station**: インターネットから取得した天気データと DHT センサーの値を組み合わせて OLED に表示します。
 
-- **rain_notifier**: Get rain data from the internet and blink a LED if it'g going to rain. (Works with the GrovePi starter kit)
+- **Open_Wifi_Finder**: 開いている WiFi ネットワークを探し、Grove RGB LCD に表示します。（GrovePi スターターキット対応）
 
-- **Sensor_Twitter_Feed**: Get Sensor data from GrovePi sensors and post the data on twitter. (Works with the GrovePi starter kit)
+- **rain_notifier**: インターネットから雨の予報を取得し、雨が降りそうな場合に LED を点滅させます。（GrovePi スターターキット対応）
 
-- **tilt_buzzer**: Turn the buzzer on/off deping on the values read from the accelerometer
+- **Sensor_Twitter_Feed**: GrovePi に接続した各種センサーのデータを取得し、その内容を Twitter に投稿します。（GrovePi スターターキット対応）
 
-- **Ultrasonic_And_Relay**: Read the ultrasonic ranger and turn the relay on/off depending on the values read
+- **tilt_buzzer**: 加速度センサーの値に応じてブザーの ON/OFF を切り替えます。
 
-- **Whos_at_the_Door**: Checks if someone is at the door, if there is someone then it takes a photo and mails it
+- **Ultrasonic_And_Relay**: 超音波レンジャーの測定値に応じてリレーを ON/OFF します。
 
-- **CO2_sensor**: Read the data from the CO2 Sensor and print it in the terminal
+- **Whos_at_the_Door**: ドア前に人がいるかを検知し、いれば写真を撮ってメールを送信します。
 
-See more at the [GrovePi Site](http://dexterindustries.com/GrovePi/)
+- **CO2_sensor**: CO2 センサーからデータを読み取り、ターミナルに表示します。
+
+より詳しい情報は [GrovePi Site](http://dexterindustries.com/GrovePi/) を参照してください。
 
 ## License
 .

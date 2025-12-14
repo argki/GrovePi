@@ -1,31 +1,33 @@
 ## Installing the GrovePi for Python
 
-Assuming the combined `DexterInd` repository has already been cloned into the `pi` user's home directory (for example at `~/DexterInd`), the GrovePi python library can be installed with:
+`DexterInd` リポジトリ一式が `pi` ユーザーのホームディレクトリ（例: `~/DexterInd`）に clone 済みであることを前提とすると、GrovePi の Python ライブラリは次のようにインストールできます。
+
 ```bash
 cd ~/DexterInd/GrovePi/Script
 bash update_grovepi.sh
 ```
 
-You can also install it by running the `setup.py` installer directly, but beware of the other requirements for it too: specifically about the `di_i2c` module from https://github.com/DexterInd/RFR_Tools that has to be installed and the enabling of the I2C in `raspi-config` menu. 
-```
+`setup.py` インストーラを直接実行してインストールすることもできますが、その場合はいくつか追加要件に注意してください。具体的には、https://github.com/DexterInd/RFR_Tools に含まれる `di_i2c` モジュールをインストールしておくこと、および `raspi-config` メニューから I2C を有効化しておくことが必要です。
+
+```bash
 pip install -r requirements.txt
 ```
-```
+
+```bash
 python3 setup.py install
 ```
 
-You can also run `python setup.py test` to test import the modules of the GrovePi package that are listed in the [package_modules.txt](package_modules.txt) file. The `python setup.py test` commands should be run after pip installing the dependencies.
+また、GrovePi パッケージに含まれるモジュールが正しく import できるかをテストするために、`python setup.py test` を実行することもできます。`python setup.py test` は、依存パッケージを `pip` でインストールした後に実行してください。テスト対象のモジュールは [package_modules.txt](package_modules.txt) に列挙されています。
 
 ## Library Breakdown
 
-There are 2 kind of example scripts:
+サンプルスクリプトには、大きく 2 種類があります。
 
-1. Example programs that only require the `grovepi` module - these example scripts are found in this directory (or root directory of the Python package).
+1. `grovepi` モジュールだけに依存するサンプルプログラム — これらはこのディレクトリ（Python パッケージのルート）に配置されています。
+2. `grovepi` 以外のサブライブラリに基づいたサンプルプログラム — これらはこのディレクトリのサブディレクトリに配置されています。
 
-1. Example programs that are based on other sublibraries other than the `grovepi` module - these example scripts are found in the subdirectories of this directory.
-
-The libraries installed with the GrovePi package are listed in [here](package_modules.txt).
+GrovePi パッケージとともにインストールされるライブラリの一覧は [こちら](package_modules.txt) に記載されています。
 
 ## Python Consideration
 
-Even though you can install the GrovePi package for both versions of it (2.x and 3.x), some libraries other than the main one (`grovepi.py`) can only be used with Python3. Therefore, it's just better to use Python 3 by-default, instead of relying on an older version of Python which will anyway get retired in the very near future.
+GrovePi パッケージ自体は Python 2.x / 3.x の両方向けにインストール可能ですが、メインの `grovepi.py` 以外の一部ライブラリは Python 3 でのみ利用できます。そのため、今後引退が確実な Python 2 ではなく、最初から Python 3 を標準として使うことをおすすめします。

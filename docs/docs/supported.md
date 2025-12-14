@@ -1,10 +1,10 @@
 # Supported Modules
 
-A [grid list of supported modules](https://www.dexterindustries.com/grovepi/) (sensors and actuators) can be seen on our page somewhere in the middle of it - you need to scroll down quite a lot.
-Upon scrolling down, you'll see a list that looks like this one down below.
+サポートされているモジュール（センサーやアクチュエータ）の一覧は、[GrovePi のページ](https://www.dexterindustries.com/grovepi/) の中ほどにある **grid list of supported modules** として掲載されています（かなりスクロールする必要があります）。  
+スクロールしていくと、次のような一覧が現れます。
 
 ![GrovePi Modules](img/sensors.PNG)
 
 # DI-Sensors
 
-The GrovePi can also be used along with our [DI-Sensors](https://github.com/DexterInd/DI_Sensors/) that require an I2C interface. The GrovePi has 3 I2C ports which can be used for interfacing with these sensors. More can be found in the [DI-Sensors Documentation](http://di-sensors.readthedocs.io).
+GrovePi は、I2C インターフェースを必要とする [DI-Sensors](https://github.com/DexterInd/DI_Sensors/) と組み合わせて使うこともできます。GrovePi には 3 つの I2C ポートがあり、これらを通じて DI-Sensors を接続できます。詳細は [DI-Sensors Documentation](http://di-sensors.readthedocs.io) を参照してください。

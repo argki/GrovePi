@@ -1,71 +1,70 @@
 ## **GrovePi Open Wifi Finder**
 
-GrovePi is an open source platform for connecting Grove Sensors to the Raspberry Pi.  Create your Internet of Things devices and inventions, no soldering!
+GrovePi は、Grove センサーを Raspberry Pi に接続するためのオープンソース・プラットフォームです。はんだ付け不要で、さまざまな IoT デバイスや発明品を作ることができます。
 
-Scan for open wifi networks!  This is a portable wifi hotspot finder.  See our project [here](http://www.dexterindustries.com/GrovePi) for more information on turning this into a portable wifi hotspot finder.
+このプロジェクトでは、オープンな WiFi ネットワークをスキャンします。いわばポータブル WiFi ホットスポットファインダーです。これをポータブルな WiFi ホットスポットファインダーに仕立てる方法については、[こちらのプロジェクトページ](http://www.dexterindustries.com/GrovePi) を参照してください。
 
 ### How Does it Work?
-The GrovePi board slips over the Raspberry Pi.  Connect the Grove Sensors to the GrovePi board.  
+GrovePi ボードを Raspberry Pi に差し込み、その上に Grove センサーを接続します。
 
 ####Software Setup Notes:
-  * This example uses [wifi library](https://wifi.readthedocs.org/en/latest/wifi_command.html).  Install with pip install wifi
-  * Wifi dongle must be on wlan0 ; Check this with the command "ifconfig" on the command line.
+  * このサンプルでは [wifi library](https://wifi.readthedocs.org/en/latest/wifi_command.html) を使用します。`pip install wifi` でインストールしてください。
+  * WiFi ドングルは `wlan0` として認識されている必要があります。コマンドラインで `ifconfig` を実行して確認してください。
 
 ####Hardware Setup Notes:
-  * Buzzer goes on port D2 of the GrovePi.
-  * LED Goes on port D3 of the GrovePi.
-  * The LCD goes on I2C-1.  Check this with the command "sudo i2cdetect -y 1"
+  * ブザーは GrovePi の D2 ポートに接続します。
+  * LED は GrovePi の D3 ポートに接続します。
+  * LCD は I2C-1 に接続します。`sudo i2cdetect -y 1` コマンドで確認してください。
 
-The GrovePi connects the Raspberry Pi and Grove sensors.  You can learn [more about GrovePi here.](http://www.dexterindustries.com/GrovePi)
+GrovePi は、Raspberry Pi と Grove センサーを接続する役割を担います。[GrovePi についての詳細はこちら](http://www.dexterindustries.com/GrovePi)。
 
 ### Make This Start at Boot!
-If you're going to take this outside, make sure you can start this at boot.  
+外に持ち出して使う場合などは、起動時に自動でこのプログラムが動くようにしておくと便利です。
  
-First, the files in this directory are copied into the home directory.
+まず、このディレクトリ内のファイルを home ディレクトリにコピーします。
  
-Make a script "start.sh" and put a command to start the wifi_finder.py script.
+次に `start.sh` というスクリプトを作成し、その中で `wifi_finder.py` を起動するようにします。
  
-```
+```bash
 sudo nano start.sh
 ```
  
-The contents of start.sh are going to be:
+`start.sh` の内容は次のようになります。
  
-```
+```bash
 #!/bin/bash
 sudo python3 /home/pi/wifi_finder.py
 ```
 
-And then open up rc.local
+続いて `rc.local` を開きます。
 
-```
+```bash
 sudo nano /etc/rc.local
 ```
 
-and add the last few lines of this file should be:
+このファイルの末尾数行を次のようにします。
 
-```
+```bash
 sudo sh /home/pi/start.sh
 exit 0
 ```
 
-Then that's it!  Reboot and test!
+これで設定は完了です。再起動して動作を確認してください。
  
-Have a question about this example?  [Ask on the forums here.](http://forum.dexterindustries.com/c/grovepi)
+このサンプルについて質問があれば、[こちらのフォーラム](http://forum.dexterindustries.com/c/grovepi) で問い合わせてください。
 
-LICENSE: 
-These files have been made available online through a [Creative Commons Attribution-ShareAlike 3.0](http://creativecommons.org/licenses/by-sa/3.0/) license.
-
+LICENSE:  
+これらのファイルは [Creative Commons Attribution-ShareAlike 3.0](http://creativecommons.org/licenses/by-sa/3.0/) ライセンスの下で公開されています。
 
 ### Raspberry Pi Compatibility
-The GrovePi is compatible with the Raspberry Pi models A, A+, B, B+, and 2.
+GrovePi は Raspberry Pi A / A+ / B / B+ / 2 と互換性があります。
 
 ### Programming the GrovePi
-The GrovePi can be programmed in Python, C, C#, Go, and NodeJS on the Raspberry Pi.  Simply start with one of our [example projects](http://www.dexterindustries.com/GrovePi/projects-for-the-raspberry-pi/) or [example code](https://github.com/DexterInd/GrovePi/tree/master/Software).  
-The GrovePi uses an Arduino to interface between the Raspberry Pi and the Grove Sensors, and comes programmed with a standard firmware.  The firmware can be rewritten from the Raspberry Pi.  
+GrovePi は Raspberry Pi 上で Python / C / C# / Go / NodeJS から利用できます。まずは [example projects](http://www.dexterindustries.com/GrovePi/projects-for-the-raspberry-pi/) や [example code](https://github.com/DexterInd/GrovePi/tree/master/Software) から試してみてください。  
+GrovePi は Arduino を使って Raspberry Pi と Grove センサーのブリッジを行っており、標準ファームウェアが書き込まれた状態で出荷されています。ファームウェアは Raspberry Pi から書き換えることができます。
 
 ### Getting Help
-Need help? We [have a forum here where you can ask questions or make suggestions](http://www.dexterindustries.com/GrovePi/projects-for-the-raspberry-pi/).
+サポートが必要な場合は、[こちらのフォーラム](http://www.dexterindustries.com/GrovePi/projects-for-the-raspberry-pi/) で質問や提案を行えます。
 
 The MIT License (MIT)
 
@@ -89,6 +88,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
 
 See more at the [GrovePi Site](http://dexterindustries.com/GrovePi/)

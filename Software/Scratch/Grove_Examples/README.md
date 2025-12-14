@@ -1,46 +1,41 @@
 Scratch examples for GrovePi
 ============================
 
-These are simple examples meant to illustrate how you can access GrovePi features through Scratch. 
+ここに含まれるのは、Scratch から GrovePi の機能にアクセスする方法を示す、シンプルなサンプル集です。
 
-## 1. Simple LED: led_on_port_7 :
+## 1. Simple LED: led_on_port_7
 
-Plug any GrovePi LED onto Port 7 and run this Scratch script.
+GrovePi のポート 7 に任意の Grove LED を接続し、この Scratch スクリプトを実行します。
 
-Click on the LED (on the screen) to control the physical LED
+- 画面上の LED をクリックすると、実機の LED を制御できます。
+- Dex をクリックすると、LED が 2 秒間点灯し、その後自動で消灯します。
+- キーボードの B キーを押すと、LED が点滅します。
 
-Click on Dex to turn the LED on for 2 seeconds and then it will turn off automatically
+物理 LED と Scratch 上の LED は同じように反応します。
 
-Click on the letter B on your keyboard to generate a blinking LED
+## 2. two_tone_buzzer
 
-Both the physical LED and the Scratch LED should react together
+ブザーをポート 5 に接続します。
 
-## 2. two_tone_buzzer :
+ボールを動かすと、脚に当たったときは低い音、頭に当たったときは高い音が鳴ります。
 
-Plug the buzzer in port 5
+## 3. two_buttons_in_parallel
 
-Move the ball around. When it hits the leg a low buzz will be emitted. When it hits the head, a low buzz will be heard
+ボタンをポート 2 に、もう一つのボタンをポート 3 に接続します。
 
-## 3. two_buttons_in_parallel :
+- 最初のボタン（ポート 2）を押すと、Dex が手を振ります。
+- 2 つ目のボタン（ポート 3）を押すと、Dex が回転します。
 
-Put a button in port 2 and another one in port 3.
+## 4. LCD screen
 
-Press the first button (in port 2). Dex will wave
+LCD を任意の I2C ポートに接続します。
 
-Press the second button (in port 3). Dex will rotate. 
+- 画面上の 6 つのカラフルな円のいずれかをクリックすると、LCD の背景色（とサングラスの色）が変わります。
+- 四隅にある 4 つのテキストボタンをクリックすると、そのテキストが LCD に表示され、Dex も同じテキストをしゃべります。
+- Dex をクリックすると、名前の入力を求められ、入力した名前が LCD に表示されます。
 
-## 4. LCD screen :
+## 5. Rotary sensor
 
-Put LCD screen in any of the I2C ports
+ロータリーセンサーをポート A0 に接続します。
 
-Clicking on any of the six coloured circles will change the background colour of the LCD screen (and change the colour of the sunglasses)
-
-Clicking on any of the four text buttons in the corners will display that text (and have Dex say the selected text)
-
-Clicking on Dex will have Dex ask you your name, and then display it on the LCD screen
-
-## 5. Rotary sensor:
-
-Plug the rotary sensor into port A0
-
-Click on the Green flag and use the rotary sensor to move Dex left to right
+緑の旗をクリックし、ロータリーセンサーを回して Dex を左右に動かします。

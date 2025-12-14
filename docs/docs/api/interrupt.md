@@ -1,237 +1,232 @@
 #API - Interrupt-Based Devices
 
-In this section the Python API reference for interrupt-based devices is described. This library is supported on both major versions
-of Python: 2.x and 3.x.
+このセクションでは、割り込みベースのデバイス向けの Python API リファレンスを説明します。このライブラリは Python 2.x / 3.x の両方のメジャーバージョンに対応しています。
 
-The API for the following sensors is described in this section:
+このセクションで説明するセンサーは次のとおりです。
 
 - [Grove Dust Sensor](https://www.seeedstudio.com/Grove-Dust-Sensor%EF%BC%88PPD42NS%EF%BC%89-p-1050.html)
 - [Grove Encoder](https://www.seeedstudio.com/Grove-Encoder-p-1352.html)
-- [Grove Water Flow Sensor](https://www.seeedstudio.com/M11%2A1.25-Water-Flow-Sensor-p-1345.html) of whose functionality can be used in other applications too
+- [Grove Water Flow Sensor](https://www.seeedstudio.com/M11%2A1.25-Water-Flow-Sensor-p-1345.html)（他の用途にも流用可能）
 
-Apart from describing the API for the above sensors, there is also described a set of functions used to set interrupt events on the GrovePi. These functions are like the building blocks of the API of the above sensors and can be used for your own implementation, should it be applicable to your device.
+上記センサー向け API の説明に加え、GrovePi 上で割り込みイベントを設定するための一連の関数についても説明します。これらの関数は上記センサー用 API を構成する部品であり、ご自身のデバイス向けに実装する際にも利用できます。
  
 ---
 **IMPORTANT**
 
-This library and the other ones too are not thread-safe. You cannot call the GrovePi from multiple threads or processes
-as that will put the GrovePi into a broken state.
+このライブラリ（および他のライブラリ）はスレッドセーフではありません。複数のスレッドやプロセスから同時に GrovePi を呼び出すことはできません。そのような使い方をすると GrovePi が不正な状態になります。
 
-In case you need to reset the GrovePi from your Raspberry Pi, [check this section](../../fw/#resetting-the-grovepi).
+Raspberry Pi から GrovePi をリセットする必要がある場合は、[このセクション](../../fw/#resetting-the-grovepi) を参照してください。
 
-The functions don't verify if the input parameters are valid and therefore the parameters have to be verified/validated before that.
-Calling a function with improper parameters can result in an undefined behavior for the GrovePi.
+各関数は引数が妥当かどうかを検証しません。そのため、呼び出し側で事前に引数の検証・チェックを行う必要があります。不正な引数で関数を呼び出すと、GrovePi の動作が未定義になる可能性があります。
 ---
 
 ##`grovepi.set_pin_interrupt(pin, ftype, interrupt_mode, period)`
-Attach an interrupt event to a port.
+指定ポートに割り込みイベントを紐付けます。
 
-Can be used to count pulses, duration of pulses, set different kinds of trigger modes (on change, rising or falling edges) all done within a given time period.
+パルスのカウント、パルスの長さの測定、変化時／立ち上がり／立ち下がりなどさまざまなトリガーモードの設定を、指定した時間枠の中で行うことができます。
 
-If there are subsequent calls to this set function without detaching the interrupt event first from a given pin, then it will overwrite the old setting and update it to reflect the latest one.
+同じピンに対して、この関数を割り込み解除なしに連続で呼び出した場合は、以前の設定が上書きされ、最新の設定が有効になります。
 
-Also, setting this up disables the OUTPUT functionality on the selected pin. If the selected pin has to drive the output, then detach the interrupt event with [grovepi.unset_pin_interrupt](#grovepiunset_pin_interruptpin).
+また、この設定を行うと、該当ピンの OUTPUT 機能は無効化されます。そのピンで出力を行いたい場合は、[grovepi.unset_pin_interrupt](#grovepiunset_pin_interruptpin) で割り込みを解除してください。
 
 **Parameters**
 
-- `pin {Integer}` can be pins D2-D8 to which the device is connected to
-- `ftype {Integer}` the type of event/operation associated for the given pin. Can take values `grovepi.COUNT_CHANGES` (for counting the number of triggers) or `grovepi.COUNT_LOW_DURATION` (which measures how much time the signal stays low in a given period).
-- `interrupt_mode {Integer}` triggering mode of the interrupt. It can be `grovepi.CHANGE`, `grovepi.FALLING` or `grovepi.RISING`, just like on the Arduino.
-- `period {Integer}` specifying after how long the recorded value should be stored on the GrovePi to be subsequently read on the master device (Raspberry Pi). Measured in milliseconds. Minimum value shouldn't be too small (say under *5 ms*) and the maximum value is *65535 ms*.
+- `pin {Integer}` デバイスを接続するピン（D2〜D8）
+- `ftype {Integer}` 割り込みイベントの種類。
+  `grovepi.COUNT_CHANGES`（トリガー回数のカウント）、`grovepi.COUNT_LOW_DURATION`（LOW 状態の継続時間の測定）
+- `interrupt_mode {Integer}` 割り込みのトリガーモード。`grovepi.CHANGE` / `grovepi.FALLING` / `grovepi.RISING`（Arduino と同様）
+- `period {Integer}` 計測した値を GrovePi 上に保存し、マスター側（Raspberry Pi）から読み取れるようにするまでの時間。単位はミリ秒。最小値はあまり小さくしすぎないこと（目安として *5 ms* 未満は避ける）、最大値は *65535 ms*。
 
 **Returns**: None
 
 ---
 
 ##`grovepi.unset_pin_interrupt(pin)`
-Detach an interrupt event from a given pin.
+指定ピンに紐付けられた割り込みイベントを解除します。
 
-Necessary if you want to set output values to this pin with [grovepi.digitalWrite](../gpio/#grovepidigitalwritepin-value) function.
+[grovepi.digitalWrite](../gpio/#grovepidigitalwritepin-value) 関数でそのピンに出力を行いたい場合は、この関数で割り込みを解除する必要があります。
 
 **Parameters**
 
-- `pin {Integer}` pins D2-D8 from which the interrupt is released from
+- `pin {Integer}` 割り込みを解除するピン（D2〜D8）
 
 **Returns**: None
 
 ---
 
 ##`grovepi.unset_all_interrupts()`
-Detach all active interrupt events on all pins.
+すべてのピンに設定されている割り込みイベントを解除します。
 
-**Parameters**: None
+**Parameters**: なし
 
 **Returns**: None
 
 ---
 
 ##`grovepi.is_interrupt_active(pin)`
-Check if a pin has an interrupt event associated.
+指定ピンに割り込みイベントが設定されているかどうかを確認します。
 
 **Parameters**
 
-- `pin {Integer}` pin to check (D2-D8) if there's an associated interrupt event
+- `pin {Integer}` チェック対象のピン（D2〜D8）
 
-**Returns**: `{Bool}` - `True` if it has an interrupt event associated and `False` if otherwise.
+**Returns**: `{Bool}` — 割り込みイベントが設定されていれば `True`、そうでなければ `False`
 
 ---
 
 ##`grovepi.get_active_interrupts()`
-Get a list of all pins that have associated interrupt events.
+割り込みイベントが設定されているすべてのピンの一覧を取得します。
 
-**Parameters**: None
+**Parameters**: なし
 
-**Returns**: A list of integers representing the active pins that have interrupt events.
+**Returns**: 割り込みイベントが有効なピン番号のリスト（整数）
 
 ---
 
 ##`grovepi.read_interrupt_state(pin)`
-Get the recorded value by the interrupt event on the given pin.
+指定ピンに紐付いた割り込みイベントが記録した値を取得します。
 
-If an interrupt is set on pin D2 (D2 is taken as an example, it can be any other digital pin) with the type of operation set to `grovepi.COUNT_CHANGES` and mode of interrupt set to `grovepi.RISING` with a period set to *1000 ms*, then say if 567 rising edges are detected, then at the end of this period of *1000 ms*, this function will return for pin D2 value 567. And the returned value of this function on D2 pin will update every *1000 ms*, because that's the period that has been set for it. And the outcome varies depending on how the interrupt event is initially set.
+例えば、ピン D2（例として D2 を使用。実際には任意のデジタルピンで同様）に対して、`ftype` を `grovepi.COUNT_CHANGES`、割り込みモードを `grovepi.RISING`、`period` を *1000 ms* に設定したとします。この条件で 567 回の立ち上がりエッジが検出されると、*1000 ms* の期間が終了した時点で、この関数は D2 の値として 567 を返します。その後も *1000 ms* ごとに値が更新されます。実際の挙動は、最初にどのように割り込みを設定したかによって変わります。
 
 **Parameters**
 
-- `pin {Integer}` pin to check the recorded value for the associated interrupt event
+- `pin {Integer}` 割り込みイベントの記録値を取得する対象ピン
 
-**Returns**: `{Bool}` - `True` if it has an interrupt event associated and `False` if otherwise.
+**Returns**: `{Bool}` — 割り込みイベントが設定されていれば `True`、そうでなければ `False`
 
 ---
 
 ##`grovepi.dust_sensor_en(pin = 2, period = 30000)`
-Enables the [Grove Dust Sensor](https://www.seeedstudio.com/Grove-Dust-Sensor%EF%BC%88PPD42NS%EF%BC%89-p-1050.html).
+[Grove Dust Sensor](https://www.seeedstudio.com/Grove-Dust-Sensor%EF%BC%88PPD42NS%EF%BC%89-p-1050.html) を有効化します。
 
-If there is another interrupt event set on this pin, calling this method will overwrite the previous setting. Check [grovepi.set_pin_interrupt](#grovepiset_pin_interruptpin-ftype-interrupt_mode-period) to find out more. It's the same effect as with calling this after calling [grovepi.encoder_en](#grovepiencoder_enpin-2-steps-32) or [grovepi.flowEnable](#grovepiflowenablepin-2-period-2000). 
+このピンにすでに別の割り込みイベントが設定されている場合、このメソッドを呼び出すと前の設定は上書きされます。詳細は [grovepi.set_pin_interrupt](#grovepiset_pin_interruptpin-ftype-interrupt_mode-period) を参照してください。[grovepi.encoder_en](#grovepiencoder_enpin-2-steps-32) や [grovepi.flowEnable](#grovepiflowenablepin-2-period-2000) の後にこの関数を呼んだ場合も同様の効果になります。
 
-This function is the same as calling `set_pin_interrupt(pin, ftype=COUNT_LOW_DURATION, interrupt_mode=CHANGE, period=period)`.
+この関数は実質的に `set_pin_interrupt(pin, ftype=COUNT_LOW_DURATION, interrupt_mode=CHANGE, period=period)` と同じです。
 
 **Parameters**
 
-- `pin {Integer}` the pin (D2-D8) to which the dust sensor is assigned to
-- `period {Integer}` refresh time frame for the dust sensor. Maximum value for this parameter is *65535* ms.
+- `pin {Integer}` Dust Sensor を接続するピン（D2〜D8）
+- `period {Integer}` 測定の更新周期（ms）。最大値は *65535* ms。
 
 **Returns**: None
 
 ---
 
 ##`grovepi.dust_sensor_dis(pin = 2)`
-Disables the [Grove Dust Sensor](https://www.seeedstudio.com/Grove-Dust-Sensor%EF%BC%88PPD42NS%EF%BC%89-p-1050.html).
+[Grove Dust Sensor](https://www.seeedstudio.com/Grove-Dust-Sensor%EF%BC%88PPD42NS%EF%BC%89-p-1050.html) を無効化します。
 
-To disable the dust sensor that sits on the given pin. It's the same as calling [unset_pin_interrupt](#grovepiunset_pin_interruptpin) function. 
+指定ピンに接続された Dust Sensor を無効化します。[unset_pin_interrupt](#grovepiunset_pin_interruptpin) 関数を呼ぶのと同じです。
 
-*This function will be removed from future versions and it's only kept for making the API backwards-compatible.*
+*この関数は将来のバージョンで削除予定であり、後方互換性のためだけに残されています。*
 
-**Parameters**:
+**Parameters**
 
-- `pin {Integer}` the pin (D2-D8) to which the dust sensor is connected to
+- `pin {Integer}` Dust Sensor を接続しているピン（D2〜D8）
 
 **Returns**: None
 
 ---
  
 ##`grovepi.dust_sensor_read(pin = 2, period = 30000)`
-Reads the low pulse occupancy of the [Grove Dust Sensor](https://www.seeedstudio.com/Grove-Dust-Sensor%EF%BC%88PPD42NS%EF%BC%89-p-1050.html) in the given period of time as set with [grovepi.set_pin_interrupt](#grovepiset_pin_interruptpin-ftype-interrupt_mode-period) function.
+[grovepi.set_pin_interrupt](#grovepiset_pin_interruptpin-ftype-interrupt_mode-period) で設定した時間枠において、[Grove Dust Sensor](https://www.seeedstudio.com/Grove-Dust-Sensor%EF%BC%88PPD42NS%EF%BC%89-p-1050.html) の Low Pulse Occupancy（LPO）を読み取ります。
 
-**Parameters**: None
+**Parameters**
 
-- `pin {Integer}` - the pin (D2-D8) to which the dust sensor is connected to
-- `period {Integer}` - refresh time frame for the dust sensor as set with [grovepi.set_pin_interrupt](#grovepiset_pin_interruptpin-ftype-interrupt_mode-period) function. Maximum value for this parameter is *65535* ms.
+- `pin {Integer}` Dust Sensor を接続しているピン（D2〜D8）
+- `period {Integer}` [grovepi.set_pin_interrupt](#grovepiset_pin_interruptpin-ftype-interrupt_mode-period) で設定した測定周期（ms）。最大値は *65535* ms。
 
-**Returns**: `{(Integer, Float, Float)}` list
+**Returns**: `{(Integer, Float, Float)}` のリスト
 
-- 1st element is the LPO time
-- the 2nd one is the percentage (LPO time divided by total period)
-- the 3rd is the concentration as measured in _pcs/283ml=0.01cf_ where the particle size is over _1um_
+- 1 番目の要素: LPO 時間
+- 2 番目の要素: LPO 時間 / 測定周期 の割合（パーセンテージ）
+- 3 番目の要素: 粒子サイズが _1um_ 以上の場合の濃度（単位は _pcs/283ml=0.01cf_）
 
-The dust sensor's characteristics can be seen in the following graph.
+Dust Sensor の特性は次のグラフのとおりです。
 
 ![Grove Dust Sensor Characteristics](../img/dust_sensor_characteristics.jpg)
 
 ---
 
 ##`grovepi.encoder_en(pin = 2, steps = 32)`
-Enable the [Grove Encoder](https://www.seeedstudio.com/Grove-Encoder-p-1352.html).
+[Grove Encoder](https://www.seeedstudio.com/Grove-Encoder-p-1352.html) を有効化します。
 
-If the pin already has an associated interrupt event, calling this method will overwrite the setting with the new change for the given pin.
+このピンにすでに別の割り込みイベントが設定されている場合、このメソッドを呼び出すと前の設定は上書きされます。
 
-Since the encoder needs two interrupt-enabled pins, when calling this function for a *pin*, it also attaches the next pin in line *pin + 1*. To see which pins have been attached, call [get_active_interrupts](#grovepiget_active_interrupts) function.
+エンコーダは 2 本の割り込み対応ピンを必要とするため、この関数をある *pin* に対して呼び出すと、その次のピン（*pin + 1*）にも割り込みを設定します。どのピンに割り込みが有効になっているかを確認するには [get_active_interrupts](#grovepiget_active_interrupts) を呼び出してください。
 
-**Parameters**: 
+**Parameters**
 
-- `pin {Integer}` the pin to which the encoder is connected to. It also attaches the pin right next up in its line *pin + 1*. Can be set for D2-D7 pins. Notice how the last one can't be used because there would have to be another pin available after it, but there isn't because it's the last one in the chain.
-
-- `steps {Integer}` specifies the number of steps for the encoder
+- `pin {Integer}` Encoder を接続するピン。直後のピン *pin + 1* にも割り込みが設定されます。D2〜D7 のピンに設定できます。最後のピンは、その次のピンが存在しないため使用できません。
+- `steps {Integer}` Encoder のステップ数
 
 **Returns**: None
 
 ---
 
 ##`grovepi.encoder_dis(pin = 2)`
-Disable the [Grove Encoder](https://www.seeedstudio.com/Grove-Encoder-p-1352.html).
+[Grove Encoder](https://www.seeedstudio.com/Grove-Encoder-p-1352.html) を無効化します。
 
-Necessary if you want to set output values to this pin with [grovepi.digitalWrite](../gpio/#grovepidigitalwritepin-value) function. It's the same as calling [unset_pin_interrupt](#grovepiunset_pin_interruptpin) function for *pin* and *pin + 1*. 
+[grovepi.digitalWrite](../gpio/#grovepidigitalwritepin-value) 関数でこのピンに出力を行いたい場合は、この関数で割り込みを解除する必要があります。内部的には、*pin* および *pin + 1* の両方に対して [unset_pin_interrupt](#grovepiunset_pin_interruptpin) を呼ぶのと同じです。
 
-**Parameters**:
+**Parameters**
 
-- `pin {Integer}` the pin (D2-D8) to which the flow sensor is connected to
+- `pin {Integer}` Flow Sensor を接続しているピン（D2〜D8）
 
 **Returns**: None
 
 ---
 
 ##`grovepi.encoderRead(pin = 2)`
-Read the data off of the [Grove Encoder](https://www.seeedstudio.com/Grove-Encoder-p-1352.html).
+[Grove Encoder](https://www.seeedstudio.com/Grove-Encoder-p-1352.html) から現在値を読み取ります。
 
-**Parameters**:
+**Parameters**
 
-- `pin {Integer}` - the pin (D2-D7) to which the encoder is attached to.
+- `pin {Integer}` Encoder を接続しているピン（D2〜D7）
 
-**Returns**: `{Integer}` the current position of the encoder
+**Returns**: 現在位置を表す `{Integer}`
 
 ---
 
 ##`grovepi.flowEnable(pin = 2, period = 2000)`
-Enables the [Grove Water Flow Sensor](https://www.seeedstudio.com/M11%2A1.25-Water-Flow-Sensor-p-1345.html).
+[Grove Water Flow Sensor](https://www.seeedstudio.com/M11%2A1.25-Water-Flow-Sensor-p-1345.html) を有効化します。
 
-This function literally counts the number of rising pulses in the given time period. Because of that, calling this is the same as calling `set_pin_interrupt(pin, ftype=COUNT_CHANGES, interrupt_mode=RISING, period=period)` for *pin*.
+この関数は、指定した時間枠内で立ち上がりパルスの回数をカウントします。そのため、実質的には `set_pin_interrupt(pin, ftype=COUNT_CHANGES, interrupt_mode=RISING, period=period)` を呼ぶのと同じです。
 
-If the pin already has an associated interrupt event, calling this method will overwrite the setting with the new change for the given pin.
+このピンにすでに別の割り込みイベントが設定されている場合、このメソッドを呼び出すと前の設定は上書きされます。
 
-*This function will be removed from future versions and it's only kept for making the API backwards-compatible.*
+*この関数は将来のバージョンで削除予定であり、後方互換性のためだけに残されています。*
 
 **Parameters**
 
-- `pin {Integer}` the pin (D2-D8) to which the dust sensor is assigned to
-- `period {Integer}` refresh time frame for the dust sensor. Maximum value for this parameter is *65535* ms.
+- `pin {Integer}` Dust Sensor を接続しているピン（D2〜D8）
+- `period {Integer}` 測定の更新周期（ms）。最大値は *65535* ms。
 
 **Returns**: None
 
 ---
 
 ##`grovepi.flowDisable(pin = 2)`
-Disables the [Grove Water Flow Sensor](https://www.seeedstudio.com/M11%2A1.25-Water-Flow-Sensor-p-1345.html).
+[Grove Water Flow Sensor](https://www.seeedstudio.com/M11%2A1.25-Water-Flow-Sensor-p-1345.html) を無効化します。
 
-Necessary if you want to set output values to this pin with [grovepi.digitalWrite](../gpio/#grovepidigitalwritepin-value) function. It's the same as calling [unset_pin_interrupt](#grovepiunset_pin_interruptpin) function.
+[grovepi.digitalWrite](../gpio/#grovepidigitalwritepin-value) 関数でこのピンに出力を行いたい場合は、この関数で割り込みを解除する必要があります。内部的には [unset_pin_interrupt](#grovepiunset_pin_interruptpin) を呼ぶのと同じです。
 
-*This function will be removed from future versions and it's only kept for making the API backwards-compatible.*
+*この関数は将来のバージョンで削除予定であり、後方互換性のためだけに残されています。*
 
-**Parameters**: 
+**Parameters**
 
-- `pin {Integer}` the pin (D2-D8) to which the flow sensor is connected to
+- `pin {Integer}` Flow Sensor を接続しているピン（D2〜D8）
 
 **Returns**: None
 
 ---
 
 ##`grovepi.flowRead(pin = 2)`
-Enables the [Grove Water Flow Sensor](https://www.seeedstudio.com/M11%2A1.25-Water-Flow-Sensor-p-1345.html).
+[Grove Water Flow Sensor](https://www.seeedstudio.com/M11%2A1.25-Water-Flow-Sensor-p-1345.html) を用いて測定を行います。
 
-This function counts the number of rising pulses in the time period set with [grovepi.flowEnable](#grovepiflowenablepin-2-period-2000).
+この関数は、[grovepi.flowEnable](#grovepiflowenablepin-2-period-2000) で設定した時間枠内の立ち上がりパルスの回数をカウントします。内部的には [grovepi.read_interrupt_state](#grovepiread_interrupt_statepin) を呼び出すのと同じです。
 
-It's the same as calling [grovepi.read_interrupt_state](#grovepiread_interrupt_statepin) for the given pin.
+**Parameters**
 
-**Parameters**:
+- `pin {Integer}` Flow Sensor を接続しているピン（D2〜D8）
 
-- `pin {Integer}` the pin (D2-D8) to which the flow sensor is connected to
-
-**Returns**: `{Integer}` number of rising pulses that occurred within the given time frame
+**Returns**: 指定時間内に発生した立ち上がりパルス数を表す `{Integer}`

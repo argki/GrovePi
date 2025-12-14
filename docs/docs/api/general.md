@@ -1,111 +1,108 @@
 #API - General Sensors
 
-In this section the Python API reference for diverse sensors is described. This library is supported on both major versions
-of Python: 2.x and 3.x.
+このセクションでは、さまざまなセンサー向けの Python API リファレンスを説明します。このライブラリは Python 2.x / 3.x の両方のメジャーバージョンに対応しています。
 
-In this section, the API for the following sensors is described:
+このセクションで説明するセンサーは次のとおりです。
 
 - [Grove Temperature Sensor](http://wiki.seeedstudio.com/Grove-Temperature_Sensor_V1.2/)
 - [Grove Ultrasonic Sensor](https://www.seeedstudio.com/Grove-Ultrasonic-Ranger-p-960.html)
 - [DHT11](http://wiki.seeedstudio.com/Grove-TemperatureAndHumidity_Sensor/)
 - [DHT22](http://wiki.seeedstudio.com/Grove-Temperature_and_Humidity_Sensor_Pro/)
-- [Grove IR Receiver](https://www.seeedstudio.com/Grove-Infrared-Receiver-p-994.html) necessary for the [Infrared Remote](https://www.dexterindustries.com/shop/infrared-remote/)
+- [Grove IR Receiver](https://www.seeedstudio.com/Grove-Infrared-Receiver-p-994.html) （[Infrared Remote](https://www.dexterindustries.com/shop/infrared-remote/) に必要）
 
 ---
 **IMPORTANT**
 
-This library and the other ones too are not thread-safe. You cannot call the GrovePi from multiple threads or processes
-as that will put the GrovePi into a broken state.
+このライブラリ（および他のライブラリ）はスレッドセーフではありません。複数のスレッドやプロセスから同時に GrovePi を呼び出すことはできません。そのような使い方をすると GrovePi が不正な状態になります。
 
-In case you need to reset the GrovePi from your Raspberry Pi, [check this section](../fw/#resetting-the-grovepi).
+Raspberry Pi から GrovePi をリセットする必要がある場合は、[このセクション](../fw/#resetting-the-grovepi) を参照してください。
 
-The functions don't verify if the input parameters are valid and therefore the parameters have to be verified/validated before that.
-Calling a function with improper parameters can result in an undefined behavior for the GrovePi.
+各関数は引数が妥当かどうかを検証しません。そのため、呼び出し側で事前に引数の検証・チェックを行う必要があります。不正な引数で関数を呼び出すと、GrovePi の動作が未定義になる可能性があります。
 ---
 
 ##`grovepi.temp(pin, model='1.0')`
-Read temperature from the [Grove Temperature Sensor](http://wiki.seeedstudio.com/Grove-Temperature_Sensor_V1.2/) on the GrovePi.
+GrovePi 上の [Grove Temperature Sensor](http://wiki.seeedstudio.com/Grove-Temperature_Sensor_V1.2/) から温度を読み取ります。
 
 **Parameters**
 
-- `pin {Integer}` a number to identify the port (A0-A2) from which to do the reading
-- `model {String}` `"1.0"`, `"1.1"`, `"1.2"` depending on the used model
+- `pin {Integer}` 読み取り元のポート番号（A0〜A2）
+- `model {String}` 使用するセンサーのモデルに応じて `"1.0"` / `"1.1"` / `"1.2"`
 
-**Returns**: `{Float}` number to represent the temperature in ºC
+**Returns**: 温度（℃）を表す `{Float}`
 
 ---
 
 ##`grovepi.ultrasonicRead(pin)`
-Read the distance to an object with the [Grove Ultrasonic Sensor](https://www.seeedstudio.com/Grove-Ultrasonic-Ranger-p-960.html) on the GrovePi.
-The closer it is to the targeted object, the faster the sample rate and slower when it's farther.
+GrovePi 上の [Grove Ultrasonic Sensor](https://www.seeedstudio.com/Grove-Ultrasonic-Ranger-p-960.html) を使って、物体までの距離を読み取ります。
+対象物との距離が近いほどサンプリングレートは速く、遠ざかるほど遅くなります。
 
 **Parameters**
 
-- `pin {Integer}` a number to identify the port (D2-D8) from which to do the reading
+- `pin {Integer}` 読み取り元のポート番号（D2〜D8）
 
-**Returns**: `{Integer}` number to represent the distance to the object in centimeters
+**Returns**: 対象物までの距離（cm）を表す `{Integer}`
 
 ---
 
 ##`grovepi.version()`
-Read the version of the firmware.
+ファームウェアのバージョンを読み取ります。
 
-**Returns**: a `{String}` representing the firmware version (i.e. `"1.2.7"`)
+**Returns**: ファームウェアバージョン（例: `"1.2.7"`）を表す `{String}`
 
 ---
 
 ##`grovepi.dht(pin, module_type)`
-Read the temperature and humidity on the GrovePi with one of the given modules.
+指定した DHT 系モジュールを使って、GrovePi 上で温度と湿度を読み取ります。
 
 **Parameters**
 
-- `pin {Integer}` a number to identify the port (D2-D8) from which to do the reading
-- `module_type {Integer}` a number to identify the model
+- `pin {Integer}` 読み取り元のポート番号（D2〜D8）
+- `module_type {Integer}` 使用するモジュールの種類
 
-    - `0` for [DHT11](http://wiki.seeedstudio.com/Grove-TemperatureAndHumidity_Sensor/)
-    - `1` for [DHT22](http://wiki.seeedstudio.com/Grove-Temperature_and_Humidity_Sensor_Pro/)
-    - `2` for DHT21
-    - `3` for AM2301
+    - `0` — [DHT11](http://wiki.seeedstudio.com/Grove-TemperatureAndHumidity_Sensor/)
+    - `1` — [DHT22](http://wiki.seeedstudio.com/Grove-Temperature_and_Humidity_Sensor_Pro/)
+    - `2` — DHT21
+    - `3` — AM2301
 
-**Returns**: a `{(Float, Float}` list where the 1st parameter is the temperature in ºC and the 2nd one is the humidity as a percentage.
+**Returns**: `{(Float, Float)}` のリスト。1 番目の要素が温度（℃）、2 番目の要素が湿度（%）。
 
-**On Error**: it returns a `{(Float, Float)}` list containing `NaN`s. This happens when the sensor can't keep up with the demanded sample rate.
+**On Error**: センサーが要求されたサンプルレートについていけない場合などは、`NaN` を含む `{(Float, Float)}` を返します。
 
 ---
 
 ##`grovepi.ir_read_signal()`
-Get the decoded value from the [Grove IR Receiver](https://www.seeedstudio.com/Grove-Infrared-Receiver-p-994.html). For this you need to use a remote control of any kind. The preferred one we use is the [Infrared Remote](https://www.dexterindustries.com/shop/infrared-remote/).
+[Grove IR Receiver](https://www.seeedstudio.com/Grove-Infrared-Receiver-p-994.html) からデコード済みの値を取得します。何らかのリモコン（任意のメーカーのもの）を使う必要があります。推奨しているのは [Infrared Remote](https://www.dexterindustries.com/shop/infrared-remote/) です。
 
-In order to use this function, you first need to call [grovepi.ir_recv_pin](#grovepiir_recv_pinpin) function to bind the functionality to a given port.
+この関数を使う前に、まず [grovepi.ir_recv_pin](#grovepiir_recv_pinpin) 関数を呼び出して、どのポートを使うかを関連付けておく必要があります。
 
-**Parameters**: None
+**Parameters**: なし
 
-**Returns**: a 3-element list of this form `{(Integer, Integer, Integer)}`
+**Returns**: `{(Integer, Integer, Integer)}` 形式の 3 要素リスト
 
-- The 1st element keeps an `{Integer}` corresponding to a certain brand:
+- 1 番目の要素: メーカーを表す `{Integer}`
 
-    - `-1` for unknown and `0` for unused
-    - RC2, RC5, NEC, SONY, PANASONIC, JVC, SAMSUNG, WHYNTER, AIWA_RC_T501, LG, SANYO, MITSUBISHI, DISH, SHARP, DENON, PRONTO, LEGO_PF having values from `1` to `17`
+    - 不明な場合は `-1`、未使用は `0`
+    - RC2, RC5, NEC, SONY, PANASONIC, JVC, SAMSUNG, WHYNTER, AIWA_RC_T501, LG, SANYO, MITSUBISHI, DISH, SHARP, DENON, PRONTO, LEGO_PF は `1`〜`17`
 
-- The 2nd element is a 16-bit address used by some Panasonic and Sharp remotes
-- The 3rd element is the 32-bit decoded value that can be used to identify which buttons were pressed - since there's no map for them you need to do it on a case-by-case basis
+- 2 番目の要素: 一部の Panasonic / Sharp 製リモコンで使われる 16 bit アドレス
+- 3 番目の要素: どのボタンが押されたかを識別するための 32 bit デコード値（ボタンとの対応表は用意されていないため、個別にマッピングする必要があります）
 
 ---
 
 ##`grovepi.ir_recv_pin(pin)`
-Enable the [Grove IR Receiver](https://www.seeedstudio.com/Grove-Infrared-Receiver-p-994.html) on a given port. Used in conjunction with [grovepi.ir_read_signal](#grovepiir_read_signal) and [grovepi.ir_is_data](#grovepiir_is_data).
+指定したポートで [Grove IR Receiver](https://www.seeedstudio.com/Grove-Infrared-Receiver-p-994.html) を有効化します。[grovepi.ir_read_signal](#grovepiir_read_signal) や [grovepi.ir_is_data](#grovepiir_is_data) と組み合わせて使用します。
 
 **Parameters**
 
-- `pin {Integer}` The port (D2-D8) to which the IR receiver gets connected to
+- `pin {Integer}` IR Receiver を接続するポート番号（D2〜D8）
 
 **Returns**: None
 
 ---
 
 ##`grovepi.ir_is_data()`
-Checks if there's available data coming from the [Grove IR Receiver](https://www.seeedstudio.com/Grove-Infrared-Receiver-p-994.html). Used in conjunction with [grovepi.ir_read_signal](#grovepiir_read_signal) function.
+[Grove IR Receiver](https://www.seeedstudio.com/Grove-Infrared-Receiver-p-994.html) から読み取れるデータがあるかどうかを確認します。[grovepi.ir_read_signal](#grovepiir_read_signal) と組み合わせて使用します。
 
-**Parameters**: None
+**Parameters**: なし
 
-**Returns**: `True` or `False`
+**Returns**: 利用可能なデータがあれば `True`、なければ `False`

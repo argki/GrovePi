@@ -5,64 +5,64 @@
 
 ![Picture](GrovePi_Plus_By_Dexter_Industries_For_the_Raspberry_Pi.JPG)
 
-The GrovePi is an open-source platform for connecting Grove Sensors to the Rasberry Pi. Create IoT (Internet of Things) devices and inventions without the need of soldering! 
+GrovePi は、Grove センサーを Raspberry Pi に接続するためのオープンソースなプラットフォームです。はんだ付け不要で、IoT (Internet of Things) デバイスやプロジェクトを簡単に作ることができます。
 
-Its official API is written in Python, but it can also be interfaced with in other languages such as C, C#, Go and NodeJS. These other variations of the same library came from our contributors.
+公式 API は Python で提供されていますが、C / C# / Go / NodeJS など他の言語からも利用できます。これらのライブラリはコントリビュータによって提供されています。
 
 ## Getting Started
 
-For a quick installation of the `GrovePi` using the scripts in this repository, assume that the combined `DexterInd` repository has already been cloned into the `pi` user's home directory (for example at `~/DexterInd`), then run:
+このリポジトリ内のスクリプトを使って `GrovePi` をクイックインストールするには、`DexterInd` リポジトリ一式が `pi` ユーザーのホームディレクトリ（例: `~/DexterInd`）に clone 済みであることを前提に、次のコマンドを実行します。
 
 ```bash
 cd ~/DexterInd/GrovePi/Script
 bash update_grovepi.sh
 ```
 
-The same command can be used for updating the `GrovePi` to the latest version. For more details on how you can install/update your `GrovePi`, please check this [README](Script/README.md).
+同じコマンドで `GrovePi` を最新バージョンにアップデートすることもできます。インストール／アップデートの詳細については、この [README](Script/README.md) を参照してください。
 
-To install into a virtual environment, first activate your virtualenv and then run:
+仮想環境にインストールしたい場合は、あらかじめ virtualenv を有効化してから次のコマンドを実行します。
 
 ```bash
 cd ~/DexterInd/GrovePi/Script
 bash update_grovepi.sh --user-local --bypass-gui-installation
 ```
 
-To flash the latest firmware to the GrovePi, run
+GrovePi の最新ファームウェアを書き込むには、次のように実行します。
+
 ```bash
 cd /home/pi/Dexter/GrovePi/Firmware
 bash firmware_update.sh
 ```
 
-Then, import the `grovepi` module and start playing with it. Its documentation can be found [here](https://dexterind.github.io/GrovePi).
+その後、`grovepi` モジュールを import して実際に使い始めてください。ドキュメントは [こちら](https://dexterind.github.io/GrovePi) にあります。
 
-The old guide on getting started with the GrovePi can be found [here](http://www.dexterindustries.com/GrovePi/get-started-with-the-grovepi/). It can still prove to be useful if you're unsure how the GrovePi has to be stacked on top of the Raspberry Pi, although it should be pretty obvious.
+古い Getting Started ガイドは [こちら](http://www.dexterindustries.com/GrovePi/get-started-with-the-grovepi/) で参照できます。GrovePi を Raspberry Pi のどの向きで重ねるかなどに不安がある場合に役立つかもしれません（基本的には直感的に分かるはずです）。
 
 ## Support
 
 ### Raspberry Pi Compatibility
-The GrovePi is compatible with the Raspberry Pi models A, A+, B, B+, 2, and B3, B3+, A3+, and 4B.
+GrovePi は Raspberry Pi A / A+ / B / B+ / 2 / B3 / B3+ / A3+ / 4B に対応しています。
 
 ### Documentation
-There is [extensive documentation](https://dexterind.github.io/GrovePi) available
+[詳細なドキュメント](https://dexterind.github.io/GrovePi) が用意されています。
 
 ### Scratch Support
-Once you've done the above command, you can install Scratch support if you want it. This step is optional.
-```
+上記のインストールが終わったら、必要に応じて Scratch 用のサポートも追加できます（任意）。
+```bash
 sudo bash /home/pi/Dexter/GrovePi/Script/install_scratch.sh
 ```
 
-If your SD card has Scratch 2.0 installed on it, then this will install GrovePi support for it.
-GrovePi integration for Scratch 1.4 is also getting installed.
+SD カードに Scratch 2.0 がインストールされている場合、このスクリプトで GrovePi 対応が追加されます。Scratch 1.4 向けの GrovePi 連携も同時にインストールされます。
 
 ### Want to use a sensor not in the library yet?  
-Ask us in the [forums](http://forum.dexterindustries.com/c/grovepi).  Want to use the GrovePi in a language not currently supported? [Ask and we will help](http://forum.dexterindustries.com/c/grovepi).
+まだライブラリに含まれていないセンサーを使いたい場合は、[フォーラム](http://forum.dexterindustries.com/c/grovepi) で相談してください。現状サポートされていない言語から GrovePi を使いたい場合も、[フォーラム](http://forum.dexterindustries.com/c/grovepi) で質問してもらえれば、可能な限り対応します。
 
 ### Programming the GrovePi
-The GrovePi can be programmed in Python, C, C#, Go, and NodeJS on the Raspberry Pi.  Simply start with one of our [example projects](http://www.dexterindustries.com/GrovePi/projects-for-the-raspberry-pi/) or [example code](https://github.com/DexterInd/GrovePi/tree/master/Software).  
-The GrovePi uses an Arduino to interface between the Raspberry Pi and the Grove Sensors, and comes programmed with a standard firmware.  The firmware can be rewritten from the Raspberry Pi.  
+GrovePi は、Raspberry Pi 上で Python / C / C# / Go / NodeJS から利用できます。まずは [example projects](http://www.dexterindustries.com/GrovePi/projects-for-the-raspberry-pi/) や [example code](https://github.com/DexterInd/GrovePi/tree/master/Software) から試してみてください。
+GrovePi は Arduino 互換 MCU を使って Raspberry Pi と Grove センサーの橋渡しをしており、標準ファームウェアが書き込まれた状態で出荷されています。このファームウェアは Raspberry Pi から書き換えることができます。
 
 ### Getting Help
-Need help? We [have a forum here where you can ask questions or make suggestions](http://www.dexterindustries.com/GrovePi/projects-for-the-raspberry-pi/).
+サポートが必要な場合は、[こちらのフォーラム](http://www.dexterindustries.com/GrovePi/projects-for-the-raspberry-pi/) で質問や提案を行えます。
 
 ### Getting Ideas
-Need an idea to get started?  [We have a few project examples to get your creative juices flowing](http://www.dexterindustries.com/GrovePi/projects-for-the-raspberry-pi/).
+何から始めればよいか分からない場合は、[プロジェクト例](http://www.dexterindustries.com/GrovePi/projects-for-the-raspberry-pi/) を眺めて、アイデアのヒントにしてみてください。

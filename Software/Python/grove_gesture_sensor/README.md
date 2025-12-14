@@ -1,24 +1,27 @@
 Grove - Gesture Sensor v1.0 Python library and examples
 =======================================================
-####This library is for using the Grove - Gesture Sensor v1.0(http://www.seeedstudio.com/depot/Grove-Gesture-p-2463.html)
 
-Code derived from the basic Arduino library for the Gesture Sensor by Seeed: https://github.com/Seeed-Studio/Gesture_PAJ7620
+このライブラリは、[Grove - Gesture Sensor v1.0](http://www.seeedstudio.com/depot/Grove-Gesture-p-2463.html) を GrovePi から扱うための Python ライブラリおよびサンプルです。
 
-#####Files:
-* **grove_gesture_sensor.p**y: library with functions to read data from the gesture sensors
-* **gesture_print.py**: This example prints the gesture on the screen when a user does an action over the sensor. Useful when testing the gesture sensor
-* **gesture_value.py**: This example returns a value when a user does an action over the sensor. Useful when integrating in your own examples
+コードは、Seeed 提供の Arduino 用 Gesture Sensor ライブラリ（https://github.com/Seeed-Studio/Gesture_PAJ7620）をベースにしています。
 
-#####NOTE:
-* This is an I2C sensor so you can connect it to any I2C port on the GrovePi
-* The gesture sensor might restart your GrovePi if you hot-plug the sensor when the GrovePi is already powered on. Please connect the sensor before powering on the GrovePi
-* The sensor polls the sensor ~.1s and after reading takes ~.4s to 1s to start polling again
-* The datasheet for the sensor mentions the sensing distance b/w 5 and 15 cm 
-* The sensor uses IR so it would be better to keep it away from IR sources of light
+##### Files
 
-######The GrovePi connects the Raspberry Pi and Grove sensors.  You can learn more about GrovePi here:  http://www.dexterindustries.com/GrovePi
+- **grove_gesture_sensor.py**: ジェスチャーセンサーからデータを読み取るための関数をまとめたライブラリ
+- **gesture_print.py**: センサー上で行ったジェスチャーを画面に表示するサンプル。ジェスチャーセンサーのテストに便利です。
+- **gesture_value.py**: ジェスチャーに応じた値を返すサンプル。自作のプログラムに組み込む際の参考になります。
 
-######Have a question about this library?  Ask on the forums here:  http://forum.dexterindustries.com/c/grovepi
+##### NOTE
+
+- これは I2C センサーなので、GrovePi 上の任意の I2C ポートに接続できます。
+- GrovePi の電源投入後にセンサーをホットプラグすると、GrovePi が再起動することがあります。必ず GrovePi の電源を入れる前にセンサーを接続してください。
+- センサーはおおよそ 0.1 秒ごとにポーリングを行い、読み取りの後は 0.4〜1 秒程度待ってから再度ポーリングを開始します。
+- データシート上の検知距離は、およそ 5〜15 cm とされています。
+- センサーは IR（赤外線）を使うため、強い赤外線光源から離して設置することをおすすめします。
+
+###### GrovePi は Raspberry Pi と Grove センサーを接続するためのボードです。詳しくは `http://www.dexterindustries.com/GrovePi` を参照してください。
+
+###### このライブラリに関する質問があれば、`http://forum.dexterindustries.com/c/grovepi` のフォーラムで問い合わせてください。
 
 # License
 

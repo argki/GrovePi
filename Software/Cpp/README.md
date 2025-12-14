@@ -1,6 +1,3 @@
-
-
-
 ### License
 
 The MIT License (MIT)
@@ -29,142 +26,152 @@ THE SOFTWARE.
 ---
 # GrovePi C++ library
 
-This library provides the basic functions for using the GrovePi in C++.
-See more about the GrovePi here:  https://www.nuget.org/packages/GrovePi/
+このライブラリは、C++ から GrovePi を利用するための基本機能を提供します。  
+GrovePi についての詳細は `https://www.nuget.org/packages/GrovePi/` を参照してください。
 
-### To install package:
-First of all, you have to `cd` to `../GrovePi/Software/Cpp`
-```
+### To install package
+
+まず `../GrovePi/Software/Cpp` に移動します。
+
+```bash
+$ cd ../GrovePi/Software/Cpp
 $ tar -xzvf grovepicpp_0.1.1.tar.gz
 $ cd grovepicpp_0.1.1
 $ sudo dpkg --install ./grovepicpp_0.1.1.deb
 ```
 
-The package contains the following sources:
-* grovepi.cpp
-* grove_dht_pro.cpp
-* grove_rgb_lcd.cpp
+パッケージには次のソースファイルが含まれています。
 
-### To uninstall package:
-```
+- `grovepi.cpp`
+- `grove_dht_pro.cpp`
+- `grove_rgb_lcd.cpp`
+
+### To uninstall package
+
+```bash
 $ sudo dpkg --remove grovepicpp
 ```
 
-### To compile with package installed:
-```
-g++ -Wall [dependencies[,..]].cpp -lgrovepicpp -o [program_name].out// the general format
-```
-```
-g++ -Wall grove_relay.cpp -lgrovepicpp -o grove_relay.out // a trivial example
+### To compile with package installed
+
+```bash
+g++ -Wall [dependencies[,..]].cpp -lgrovepicpp -o [program_name].out  // 一般的な形式
 ```
 
-### To compile without package:
-```
-g++ -Wall grovepi.cpp [dependencies[,..]].cpp -o [program_name].out // the general format
-```
-```
-g++ -Wall grovepi.cpp grove_relay.cpp -o grove_relay.out // a trivial example
+```bash
+g++ -Wall grove_relay.cpp -lgrovepicpp -o grove_relay.out            // 簡単な例
 ```
 
-### Then run the executable:
+### To compile without package
+
+```bash
+g++ -Wall grovepi.cpp [dependencies[,..]].cpp -o [program_name].out  // 一般的な形式
 ```
+
+```bash
+g++ -Wall grovepi.cpp grove_relay.cpp -o grove_relay.out            // 簡単な例
+```
+
+### Then run the executable
+
+```bash
 $ ./[program_name].out
 ```
+
 ---
-# The basic library functionalities of GrovePi are:
-* `initGrovePi()` : function for initializing communication w/ the GrovePi. It uses the implicit address of `0x04`
-* `initDevice(uint8_t address)` : function for initializing communication with a device at a specific `address`
-* `delay(milliseconds`) : function for delaying given milliseconds
-* `pinMode(uint8_t pin, uint8_t mode)`: function for setting a digital/analog port accordingly. `mode` = `INPUT` / `OUTPUT`
-* `digitalWrite(uint8_t pin, bool value)` : function for writing `HIGH`/`LOW` values to a digital port
-* `digitalRead(uint8_t pin)` : function for returning the digital value (either `HIGH`/`LOW`) read on the given pin
-* `analogWrite(uint8_t pin, uint8_t value)` : function for writing an analog value from 0-255 to a given pin
-* `analogRead(uint8_t pin)` : function for reading the value on a given pin and which returns a value from 0-255
-* `ultrasonicRead(uint8_t pin)` : function for returning the distance in centimeters an ultrasonic sensor reads on a given digital port pin
-* `setMaxI2CRetries(int _max_i2c_retries)` : function for setting the maximum number of retries before quitting current operation - **you should not use it**
-* `setGrovePiAddress(uint8_t addr)` : change the implicit GrovePi address -> this doesn't change the GrovePi's address (firmware-wise & physically), but it's only setting the address at which GrovePi is reachable - **you should not use it**
-* `writeBlock(uint8_t command, uint8_t pin_number, uint8_t opt1 = 0, uint8_t opt2 = 0)` : function for issuing a command to the GrovePi. The command is targeting a certain pin. The optional arguments can be anything depending on the command. (for example for analogWriting, we would use opt1 for sending the value we want to write)
-* `writeByte(uint8_t byte_val)` : it only sends a byte to the GrovePi. You can compose the `writeBlock` function by using multiple calls of this function
-* `readBlock(uint8_t *data_block)` : returns via the pointer the read data from GrovePi. The length of the array is returned by the function
-* `readByte()` : returns a byte from GrovePi
+# The basic library functionalities of GrovePi are
 
-# Attention:
-* it's currently not supported to use multiple I2C devices with this library, unless you reinitialize communication with the device you want to talk to (w/ `initgrovePi()` or `initDevice(uint8_t address)`
-* for any of the given functions in this library, if an error occurs on the I2C line, a `GrovePi::I2CError()` is thrown. `GrovePi::I2CError()` is derived from `std::runtime_error`
-* the library is included in `GrovePi` namespace, so don't forget to use the resolution operator or the `using` command.
+- `initGrovePi()` : GrovePi との通信を初期化します。暗黙のアドレス `0x04` を使用します。
+- `initDevice(uint8_t address)` : 指定した `address` のデバイスとの通信を初期化します。
+- `delay(milliseconds)` : 指定ミリ秒だけ待機します。
+- `pinMode(uint8_t pin, uint8_t mode)` : デジタル／アナログポートのモードを設定します。`mode` は `INPUT` / `OUTPUT`。
+- `digitalWrite(uint8_t pin, bool value)` : デジタルポートに `HIGH` / `LOW` の値を書き込みます。
+- `digitalRead(uint8_t pin)` : 指定ピンからデジタル値（`HIGH` / `LOW`）を読み取ります。
+- `analogWrite(uint8_t pin, uint8_t value)` : 指定ピンに 0〜255 のアナログ値を書き込みます。
+- `analogRead(uint8_t pin)` : 指定ピンの値を読み取り、0〜255 の値として返します。
+- `ultrasonicRead(uint8_t pin)` : 超音波センサーで計測した距離（cm）を返します（デジタルポートを利用）。
+- `setMaxI2CRetries(int _max_i2c_retries)` : 処理を中止するまでの I2C 再試行回数を設定します（**通常は使用しないでください**）。
+- `setGrovePiAddress(uint8_t addr)` : GrovePi の「暗黙のアドレス」を変更します（ファームウェアや物理アドレス自体は変わらず、到達可能なアドレスだけを変更します。**通常は使用しないでください**）。
+- `writeBlock(uint8_t command, uint8_t pin_number, uint8_t opt1 = 0, uint8_t opt2 = 0)` : GrovePi にコマンドを送信します。`command` は対象ピン `pin_number` を操作するコマンドで、`opt1` / `opt2` はコマンドに応じた追加引数です（例えばアナログ出力では `opt1` に書き込みたい値を渡します）。
+- `writeByte(uint8_t byte_val)` : GrovePi に 1 バイトだけ送信します。`writeBlock` は、この関数を複数回呼ぶことで構成されています。
+- `readBlock(uint8_t *data_block)` : GrovePi から読み取ったデータを配列として返します（配列長は戻り値で返されます）。
+- `readByte()` : GrovePi から 1 バイト読み取ります。
 
+# Attention
 
-# How to create a deb package:
+- このライブラリでは、`initGrovePi()` や `initDevice(uint8_t address)` で通信相手を切り替えない限り、複数の I2C デバイスを同時に扱うことはサポートされていません。
+- ライブラリ内のいずれかの関数で I2C ライン上のエラーが発生した場合、`GrovePi::I2CError()` 例外が送出されます（`std::runtime_error` を継承）。
+- このライブラリは `GrovePi` 名前空間内に定義されているため、名前解決演算子や `using` 宣言を忘れないようにしてください。
 
-Extract the `tar package` and `cd` into its directory. The folders' hierarchy is this.
+# How to create a deb package
 
+`tar` パッケージを展開し、そのディレクトリに `cd` します。フォルダ構成は次のようになっています。
 
 ![archive folder structure](tar_archive.PNG)
 
+----------
+
+`source` フォルダには、ソースファイルに加えて `.o` オブジェクトファイルと `.so` 共有ライブラリが含まれています。  
+共有ライブラリを生成するには、以下の手順を実行します。
+
+### Step 1
+
+すべての `.cpp` ファイルを、共有ライブラリ生成に必要な position independent code（PIC）としてコンパイルします。
+
+```bash
+g++ -C -Wall -Werror -fpic [cppfile]
+```
+
+その後、次のコマンドで共有ライブラリを作成します。
+
+```bash
+g++ -shared -o libshared.so [list of .o files]
+```
+
+ライブラリ名は常に `lib` プレフィックスと `.so` サフィックスを持つ必要があります。  
+例えば `libgrovepicpp.so` という名前であれば、ライブラリ名は `grovepicpp` となります。
+
+作成した共有ライブラリは、`grovepicpp_x.y.z/usr/lib` フォルダにコピーします。
 
 ----------
 
+### Step 2
 
-You'll see that in the `source` folder there are the source files along with the `.o` object files and `.so` files (which are the shared libraries).
-
-In order to generate the **shared libraries** we need to follow the next steps
-### **Step 1**
- Compile all the `.cpp`  files into position independent code (object files) which are required for creating a shared library:
-
-    g++ -C -Wall -Werror -fpic [cppfile]
-Run the following command to create a shared library:
-
-    g++ -shared -o libshared.so [list of .o files]
-The name of the library **must** have at all times the prefix `lib` and the suffix `.so`. The rest of it is the name of the library. This means that this `libgrovepicpp.so`  file name suggests that our library is called `grovepicpp`.
-
-After we're done with it, we have to copy the shared library to the `grovepicpp_x.y.z/usr/lib` folder.
-
+`source` フォルダ内のヘッダファイルをすべて `grovepicpp_x.y.z/usr/include` にコピーします（`include` フォルダは事前にクリーンにしておきます）。
 
 ----------
 
+### Step 3
 
-### **Step 2**
-Copy all the header files from the `source` folder to `grovepicpp_x.y.z/usr/include` (make sure you clean the `include` folder).
+`grovepicpp_x.y.z/DEBIAN/` フォルダ内の `control` ファイルを開き、バージョン番号を適切に変更します。  
+例えばバージョンが `0.2.1` の場合:
 
+1. 1 桁目: 大きな変更やアーキテクチャ変更などのメジャーリリースを表します。`0` であれば、まだ完成前のリリースであることを意味します。
+2. 2 桁目: 既存アーキテクチャに新機能が追加されたことを表します。
+3. 3 桁目: バグ修正やごく小さな変更などを表します。
 
-----------
-
-
-### **Step 3**
-Open `control` file from `grovepicpp_x.y.z/DEBIAN/` folder and modify the version accordingly.
-Let's say we have a version like this: `0.2.1`:
-
- 1. the first digit represents a major release: like a complete redesign or architecture. It's generally accepted that `0` as a "major release" actually means that the release it's yet to be completed. We'll have it this way as long as we don't have a versioning scheme in all of our repo(s)
- 2. the second digit represents a new feature added to the current architectural scheme
- 3. the third digit represents a bug-fix / a really small change / and so on.
-
-Also, please modify all the other folders name according to the version number.
-
+また、他のフォルダ名もこのバージョン番号に合わせて変更してください。
 
 ----------
 
+### Step 4
 
-### **Step 4**
-Go at the directory level where you can see the 2 main folders: `grovepicpp_x.y.z` & `source`.
-We need to create the actual package and and we'll type:
+`grovepicpp_x.y.z` と `source` の 2 つのフォルダが見える階層まで戻り、次のコマンドで実際の `.deb` パッケージを作成します。
 
-    dpkg-deb --build grovepicpp_x.y.z/
-
-
-
-----------
-
-
-### **Step 5**
-
-`cd` out of that folder and archive the folder (with its all files) with the command:
-
-    tar -csvf grovepicpp_x.y.z.tar.gz grovepicpp_x.y.z/
-
-
-
+```bash
+dpkg-deb --build grovepicpp_x.y.z/
+```
 
 ----------
 
+### Step 5
 
-### Voilà! You now have a package ready to be delivered.
+そのフォルダから 1 つ上の階層に移動し、次のコマンドでアーカイブを作成します。
+
+```bash
+tar -csvf grovepicpp_x.y.z.tar.gz grovepicpp_x.y.z/
+```
+
+----------
+
+### Voilà! これで配布可能なパッケージが完成です。

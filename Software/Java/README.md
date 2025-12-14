@@ -1,40 +1,44 @@
 ## Java Library
-### This repository contains the Java library for the GrovePi
+
+このリポジトリには、GrovePi 向けの Java ライブラリが含まれています。
 
 #### Installation ####
-Before to proceed you should install the Pi4J libraries.  
-The recommended way is to follow the official installation instructions: http://pi4j.com/install.html
+
+先に Pi4J ライブラリをインストールしておく必要があります。  
+推奨される方法は、公式のインストール手順に従うことです: http://pi4j.com/install.html
 
 #### Compile and Execute the test program ####
-Once your installation is complete and your local repository is ready then you can compile the GrovePi libraries and run the test program.
-First, enter the Java directory:
+
+Pi4J のインストールとローカルリポジトリの準備が完了したら、GrovePi ライブラリをコンパイルし、テストプログラムを実行できます。
+
+まず Java ディレクトリに移動します。
 
 ```bash
 $ cd ./Java/
 ```
 
-The folder structure will be:
+フォルダ構成は次のようになります。
 
 ```text
 $ config  doc  scripts  src  test
 ```
 
-* **bin** - it's the destination folder for the compiler and it will be created automatically, if not present, by the Bash script.
-* **config** - contains the default configuration.
-* **doc** - contains the GrovePi library documentation.
-* **scripts** - contains some Bash scripts to compile the library and execute the basic test program.
-* **src** - contains the sources of the GrovePi library.
-* **test** - contains some example code/programs.
+- **bin** — コンパイラの出力先フォルダです。存在しない場合は Bash スクリプトが自動で作成します。
+- **config** — デフォルト設定を格納します。
+- **doc** — GrovePi ライブラリのドキュメントを格納します。
+- **scripts** — ライブラリをコンパイルし、基本的なテストプログラムを実行するための Bash スクリプトを格納します。
+- **src** — GrovePi ライブラリのソースコードです。
+- **test** — サンプルコード／サンプルプログラムが入っています。
 
-To compile the library and run the test program you can use the following command:
+ライブラリをコンパイルし、テストプログラムを実行するには次のコマンドを使用します。
 
 ```bash
 $ ./scripts/compile.sh && ./scripts/Test.sh
 ```
 
-By default you will find some logs inside the `/var/log/GrovePi` folder.
+デフォルトでは、`/var/log/GrovePi` フォルダ内にログが出力されます。
 
-In case of any trouble or if you need further information don't hesitate to leave a comment on the official forum: http://forum.dexterindustries.com/c/grovepi
+問題が発生した場合や、さらに詳しい情報が必要な場合は、公式フォーラム（http://forum.dexterindustries.com/c/grovepi）にコメントを残してください。
 
 ## License
 GrovePi for the Raspberry Pi: an open source robotics platform for the Raspberry Pi.

@@ -1,55 +1,68 @@
 ## Calibrating the Grove High Temperature sensor
 
-##### Attention:
-This `README.md` is only for calibrating the probe and not the onboard  sensor. So, this sensor comes with 2 thermometers:
-1. One which is for measuring room temperatures - that's found on the sensor's board.
-2. Another one which is for measuring temperatures between `-50 °C` and `+650 °C` - it's the long metal wire. **This is the one we're calibrating.**
+##### Attention
+この `README.md` は、基板上のセンサーではなく、プローブ（長い金属ワイヤ）側の校正方法のみを説明しています。  
+このセンサーには 2 つの温度計が含まれています。
+
+1. 室温測定用 — センサーボード上に実装されているもの
+2. `-50 °C` 〜 `+650 °C` の範囲を測定するための長い金属ワイヤ（**本ドキュメントで校正対象とするのはこちら**）
 
 ## Step 1
-Make the `GrovePi` continously read an analog port and print the values in the console. The analog port should be that of the `Grove High Temperature Sensor's`.
+
+`GrovePi` に特定のアナログポートを連続して読み込ませ、その値をコンソールに表示させます。ここで使用するアナログポートは、`Grove High Temperature Sensor` を接続しているポートにしてください。
 
 ## Step 2
-Put the sensor's long wire into a cup of boiling/hot water and take note of the value that's printed in the `Raspberry Pi`'s console. At the same time, use a professional thermometer and measure the temperature and write it down.
 
-Do the same thing with cold water.
+長い金属ワイヤの先端を沸騰した（あるいは非常に熱い）水に浸し、そのとき `Raspberry Pi` のコンソールに表示される値を記録します。同時に、信頼できる温度計で水温を測り、その値も控えます。  
+同様の手順を冷水でも行います。
 
 ## Step 3
-We will now have 4 values written down in a note:
-* 2 values that were printed in the `Raspberry Pi`'s console - these values correspond with the following 2 values.
-* 2 values where the measurement unit is in `Celsius Degrees` - measured with the professional thermometer.
 
-Now, take the values that were measured with the professional thermometer and get them translated with the table provided in `thermocouple_table.json` file.
-I.e: In `thermocouple_table.json` file, `90 °C` corresponds to `3.682`.
+ここまでで、次の 4 つの値が手元にあるはずです。
 
-Now, lets assign the following values to each of these variables:
-* `i1` = the translated value (from the table) we got when we measured the hot water w/ the **professional thermometer**.
-* `i2` = the translated value (from the table) we got when we measured the cold water w/ the **professional thermometer**.
-* `o1` = the value we got in our console when we measured the hot water w/ **our GrovePi**.
-* `o2` = the value we got in our console when we measured the cold water w/ **our GrovePi**.
+- `Raspberry Pi` のコンソールに表示された 2 つの値（それぞれ、後述の 2 つの温度に対応）
+- プロ仕様の温度計で測定した 2 つの温度（単位は摂氏）
+
+次に、プロ仕様の温度計で測定した 2 つの温度について、`thermocouple_table.json` に記載された表を使って対応する値に変換します。  
+例: `thermocouple_table.json` では、`90 °C` に対して `3.682` が対応します。
+
+それぞれの値に、次のような変数名を割り当てます。
+
+- `i1` = **プロ仕様の温度計** で温水を測定し、その温度を表から変換した値
+- `i2` = **プロ仕様の温度計** で冷水を測定し、その温度を表から変換した値
+- `o1` = **GrovePi** で温水を測定したとき、コンソールに表示された値
+- `o2` = **GrovePi** で冷水を測定したとき、コンソールに表示された値
 
 ## Step 4
 
-Let's calculate an `offset` and a `factor`. We will insert the calculated values in our table (`thermocouple_table.json` file).
+ここから `offset` と `factor` を計算し、その値を `thermocouple_table.json` に反映させます。
 
-First, lets calculated the `offset`.
-* `offset` = `(o1 * i2 - i1 * o2) / (i2 - i1)`
+まずは `offset` を計算します。
 
-And then, we get to calculate the `factor`. Use the `offset` value for calculating the `factor`.
-* `factor` = `(o1 - offset) / i1`
+- `offset = (o1 * i2 - i1 * o2) / (i2 - i1)`
+
+次に、この `offset` を使って `factor` を計算します。
+
+- `factor = (o1 - offset) / i1`
 
 ## Step 5
 
-Open up `thermocouple_table.json` file and update the following values:
-* For `amp_offset` set the value we got for `offset` - it's preferable to have up to 6-7 digits in precision.
-* For `amp_factor` set the value we got for `factor` - it's preferable to have up to 6-7 digits in precision.
+`thermocouple_table.json` を開き、次の値を更新します。
 
-Save the modifications.
+- `amp_offset` には、計算した `offset` の値を設定します（6〜7 桁程度の精度で記録することを推奨）。
+- `amp_factor` には、計算した `factor` の値を設定します（同じく 6〜7 桁程度の精度を推奨）。
+
+編集が終わったら、ファイルを保存します。
 
 ## Step 6
 
-Run the `high_temperature_example.py` program.
-It's going to use the newly updated values.
+`high_temperature_example.py` を実行します。  
+このスクリプトは、更新された `amp_offset` / `amp_factor` の値を使って温度を計算します。
 
 ------
-###### `Note 1`: Calibrate the sensor when the values don't match with a professional thermometer by a long shot (i.e. 10 degrees). The sensor has already been calibrated, but who knows.
-###### `Note 2`: The sensor's precision is around `+-3 Celsius Degrees`.
+
+###### Note 1
+プロ仕様の温度計と 10 度以上ずれているような場合は、上記手順でセンサーを再校正してください（センサー自体は事前に一度校正されていますが、環境によっては再校正が必要になることがあります）。
+
+###### Note 2
+このセンサーの精度は、およそ `±3 °C` 程度です。

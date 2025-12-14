@@ -5,9 +5,10 @@ GrovePi is an open source platform for connecting Grove Sensors to the Raspberry
 
 ## Quick start
 
-Before to start you should install Node.js on your RaspberryPi and clone the repo on your local environment.
-Be sure to have npm installed and then you can proceed installing the package.
-To install node.js you can do the following:
+最初に、Raspberry Pi 上に Node.js をインストールし、このリポジトリをローカル環境に clone しておく必要があります。  
+`npm` がインストールされていることを確認したら、パッケージのインストールに進みます。
+
+Node.js をインストールする一例として、次のような手順があります（必要に応じて公式ドキュメントを参照してください）。
 
 ```bash
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
@@ -18,39 +19,46 @@ npm config set prefix $HOME/.node_modules_global
 
 #### Installing Package from NPM Repository
 
-Go inside your Node.js application folder and type
+Node.js アプリケーションのフォルダに移動して、次のコマンドを実行します。
+
 ```bash
 $ npm install node-grovepi
 ```
 
 #### Installing Package by Linking the Project In This Repo
 
-`cd` to `libs` directory in this folder and type
+このリポジトリ内の `libs` ディレクトリに移動して、次を実行します。
+
 ```bash
 npm install
 npm link
 ```
 
-Now, inside your own app (which can be anywhere in `$HOME`) you need to run
-```
+その後、自分のアプリケーション（`$HOME` 以下の任意の場所）に移動して、次を 1 回実行します。
+
+```bash
 npm link node-grovepi
 ```
-once in order to link your project to the library that's in this repository (`libs`) folder.
+
+これにより、自分のプロジェクトから、このリポジトリの `libs` フォルダにあるライブラリを参照できるようになります。
 
 #### Using the Library
 
-Now you can include the module inside your application:
+アプリケーションからモジュールを読み込むには、次のようにします。
+
 ```javascript
 var GrovePi = require('node-grovepi').GrovePi
 ```
 
-At this point you may need to include the GrovePi base classes:
+続いて、GrovePi のベースクラスを読み込みます。
+
 ```javascript
 var Commands = GrovePi.commands
 var Board = GrovePi.board
 ```
 
-If the sensor/component you need to use already has the classes then you can include them:
+利用したいセンサー／コンポーネントに対応するクラスがすでに用意されている場合は、次のように読み込みます。
+
 ```javascript
 var AccelerationI2cSensor = GrovePi.sensors.AccelerationI2C
 var UltrasonicDigitalSensor = GrovePi.sensors.UltrasonicDigital
@@ -62,31 +70,34 @@ var LoudnessAnalogSensor = GrovePi.sensors.LoudnessAnalog
 var RotaryAngleAnalogSensor = GrovePi.sensors.RotaryAnalog
 ```
 
-Now you can instantiate the GrovePi and your sensors/components, for example:
+GrovePi 本体とセンサー／コンポーネントを初期化する例は次のとおりです。
+
 ```javascript
 var board = new Board({
-    debug: true,
-    onError: function(err) {
-      console.log('Something wrong just happened')
-      console.log(err)
-    },
-    onInit: function(res) {
-      if (res) {
-        console.log('GrovePi Version :: ' + board.version())
+  debug: true,
+  onError: function(err) {
+    console.log('Something wrong just happened')
+    console.log(err)
+  },
+  onInit: function(res) {
+    if (res) {
+      console.log('GrovePi Version :: ' + board.version())
 
-        var lightSensor = new LightAnalogSensor(2)
-        console.log('Light Analog Sensor (start watch)')
-        lightSensor.on('change', function(res) {
-          console.log('Light onChange value=' + res)
-        })
-        lightSensor.watch()
-      }
+      var lightSensor = new LightAnalogSensor(2)
+      console.log('Light Analog Sensor (start watch)')
+      lightSensor.on('change', function(res) {
+        console.log('Light onChange value=' + res)
+      })
+      lightSensor.watch()
     }
-  })
+  }
+})
 ```
 
-If there is no class for your sensors or components then you can write your own functions for them:
-_Note: every custom function must be called only after the Board init._
+対応するクラスが用意されていないセンサーやコンポーネントを使いたい場合は、自分で関数を定義することもできます。
+
+_注: すべてのカスタム関数は、Board の init が完了した後にのみ呼び出してください。_
+
 ```javascript
 function customAccelerationReading() {
   var write = board.writeBytes(Commands.acc_xyz.concat([Commands.unused, Commands.unused, Commands.unused]))
@@ -108,25 +119,26 @@ function customAccelerationReading() {
 }
 ```
 
-When you are ready to go you should call the init method
+準備ができたら、次のように `init` メソッドを呼び出します。
+
 ```javascript
 board.init()
 ```
 
-Each sensor/component has at least 3 methods to get access to the data:
-- **read()** - Read data from the sensor/component
-- **stream(delay, callback)** - Start a stream with the sensor/component, each N milliseconds (delay) sends data to the callback. You can use stopStream() to close the connection.
-- **watch(delay)** - Start a polling routine which will fire a "change" event only when there are new data coming from the sensor/component. The internal timer will use the given delay value or 100 milliseconds as default. You can use stopWatch() to stop the polling.
+各センサー／コンポーネントには、最低でも次の 3 つのデータ取得メソッドがあります。
+- **read()** — センサー／コンポーネントから値を 1 回読み取る
+- **stream(delay, callback)** — 指定したミリ秒ごと（`delay`）に値を callback に渡すストリームを開始します。終了するには `stopStream()` を呼びます。
+- **watch(delay)** — 値に変化があったときだけ "change" イベントを発火するポーリングループを開始します。タイマーは、指定した `delay` もしくはデフォルトの 100ms で動作します。停止するには `stopWatch()` を呼びます。
 
-And 1 method to write data:
-- **write(value)** - Write a value on the sensor/component
+書き込み用のメソッドは 1 つです。
+- **write(value)** — センサー／コンポーネントに値を書き込みます。
 
-Some sensors expose additional methods
-- *DigitalButton* sensor exposes a **down** event which has a single argument on the callback. This argument will have the value **singlepress* or **longpress**, depending on how long the user has been pressing the button.
-- *RotaryAngleAnalogSensor* overrides the **read** method to provide noise-less output, since there are cases in which the sensor may incorrectly report that its value has changed. The sensor will return a value from 0 to 100. User also needs to call the **start** method for this sensor.
-- *LoudnessAnalogSensor* provides a **readAvgMax** method which will return average and maximum values coming from the sensor for a period of time. This period restarts every time you call the **readAvgMax** method, so it is supposed that the method is called repeatedly in a timely manner (e.g. with a **setInterval** callback). User has to call the **start** method for the monitoring to begin.
+一部のセンサーは追加メソッドを持ちます。
+- *DigitalButton* センサーは **down** イベントを提供し、コールバックの引数として `singlepress` または `longpress` を受け取ります（押下時間に応じて変化）。
+- *RotaryAngleAnalogSensor* は **read** メソッドをオーバーライドし、ノイズを抑えた出力を提供します（値が実際には変化していないのに変化したように見えるケースを避けるため）。戻り値は 0〜100 の範囲となり、このセンサーでは別途 **start** メソッドを呼ぶ必要があります。
+- *LoudnessAnalogSensor* は **readAvgMax** メソッドを提供し、一定期間内の平均値と最大値を返します。この期間は `readAvgMax` を呼ぶたびにリセットされるため、`setInterval` などで定期的に呼び出す前提です。この監視を開始するには **start** メソッドを呼ぶ必要があります。
 
-You'll find more complex examples in the "basicTest.js" file under the "tests" folder of the repository.
+より複雑なサンプルは、リポジトリ内 `tests` フォルダの `basicTest.js` ファイルを参照してください。
 
 ## License
 

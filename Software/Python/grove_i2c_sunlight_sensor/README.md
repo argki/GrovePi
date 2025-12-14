@@ -1,7 +1,8 @@
-Grove I2C Touch Sensor
+Grove I2C Sunlight Sensor
 ======================
-Raspberry Pi Python i2c library for Grove I2C Touch sensor (http://www.seeedstudio.com/depot/Grove-I2C-Touch-Sensor-p-840.html)
 
-The I2C Touch Sensor is based on FreeScale MPR121, it feels the touch or proximity of human being fingers. 
+[Grove - Sunlight Sensor](http://www.seeedstudio.com/depot/Grove-I2C-Touch-Sensor-p-840.html) を Raspberry Pi から利用するための Python i2c ライブラリです。
 
-The python library used for this sensor is based on the Python_SI1145 library by THP-JOE(https://github.com/THP-JOE/Python_SI1145)
+このセンサーは FreeScale MPR121 をベースとしており、人の指のタッチや近接を検知できます。
+
+このセンサーで使用している Python ライブラリは、THP-JOE による Python_SI1145 ライブラリ（https://github.com/THP-JOE/Python_SI1145）をベースにしています。

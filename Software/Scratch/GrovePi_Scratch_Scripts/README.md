@@ -1,15 +1,16 @@
-NOTE: THIS IS FOR DEVELOPERS ONLY.  Normal user need not do this.
-See more at http://www.dexterindustries.com/grovepi/
+NOTE: THIS IS FOR DEVELOPERS ONLY.  一般的なユーザーが実行する必要はありません。
+詳しくは `http://www.dexterindustries.com/grovepi/` を参照してください。
 
-1. Make both **GrovePiScratch_debug.sh** and **GrovePi_Scratch_Start.sh** executable:
+1. **GrovePiScratch_debug.sh** と **GrovePi_Scratch_Start.sh** の 2 つを実行可能にします。
 
-  > sudo chmod +x GrovePiScratch_debug.sh
+```bash
+sudo chmod +x GrovePiScratch_debug.sh
+sudo chmod +x GrovePi_Scratch_Start.sh
+```
 
-  > sudo chmod +x GrovePi_Scratch_Start.sh
-
-2. Copy **GrovePi_Scratch_Start.desktop** to **/usr/share/applications/**
-3. Make a desktop Shortcut from **Desktop->Education->GrovePi_Scratch_Start**
-3. Double click on **GrovePi_Scratch_Start** to start running the script
+2. **GrovePi_Scratch_Start.desktop** を **/usr/share/applications/** にコピーします。
+3. Desktop から **Education -> GrovePi_Scratch_Start** をたどり、デスクトップショートカットを作成します。
+4. **GrovePi_Scratch_Start** をダブルクリックしてスクリプトを実行します。
 
 ## License
 
@@ -35,4 +36,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-	

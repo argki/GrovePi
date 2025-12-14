@@ -1,39 +1,46 @@
 # IoTDevices
 Grove Pi library
 
-The grovepi for Java8 library is provided as maven projects.
+GrovePi を Java 8 から利用するためのライブラリです。Maven プロジェクトとして提供されています。
 
-Since you need native access to the raspberry pi device you have 2 choices:
-- Use the Pi4J library (third party: http://pi4j.com/)
-- Use the DeviceIO library (JDK: http://docs.oracle.com/javame/8.0/api/dio/api/index.html)
-You may choose which one to use. If you want to use pi4j then you dont need to add the Device IO libraries. There is no difference in how to use the components, its just a matter of which implementation you want to use to interact with the GPIO ports of the raspberry pi.
+Raspberry Pi 上のデバイスにネイティブアクセスする必要があるため、次のいずれかのライブラリを利用します。
 
+- Pi4J ライブラリ（サードパーティ: http://pi4j.com/）
+- DeviceIO ライブラリ（JDK: http://docs.oracle.com/javame/8.0/api/dio/api/index.html）
+
+どちらを使うかは用途に応じて選択できます。Pi4J を使う場合は DeviceIO ライブラリを追加する必要はありません。どちらの実装を使ってもコンポーネントの使い方は同じで、Raspberry Pi の GPIO ポートにどうアクセスするか（Pi4J / DeviceIO）の違いだけです。
 
 ## BUILD
-run:
+
+ビルドには次のコマンドを実行します。
+
 ```bash
 mvn install
 ```
 
-This creates the .jar files inside the target folder of each of the following projects:
+これにより、以下の各プロジェクトの `target` フォルダ内に `.jar` ファイルが作成されます。
+
 - GrovePi-Spec
 - GrovePi-pi4j
 - GrovePi-dio
 
 ## INCLUDING THE LIBRARIES IN YOUR PROJECTS
 
-Include the GrovePi-Spec jar. This is the core of the library.  
-Include the implementation you want to use:
-- GrovePi-pi4j and the pi4j jar 
-  - Install Pi4J following the official instructions: http://pi4j.com/install.html
-  - Download the pi4j jar and add it to your project libraries
-- GrovePi-dio and the DeviceIO jar
-  - Install in the pi and add the resulting jar to your project: https://wiki.openjdk.java.net/display/dio/Getting+Started
-  - To run using DIO remember to add: `-Djava.library.path="/home/pi/dio/build/so" -Djava.security.policy="/home/pi/dio/dio.policy"` to your Java command
+まず、コアライブラリである GrovePi-Spec の jar をプロジェクトに含めます。  
+そのうえで、利用したい実装に応じて次のどちらかを追加します。
 
-Alternatively: Use maven dependencies:
+- GrovePi-pi4j と Pi4J の jar
+  - Pi4J のインストールは公式手順（http://pi4j.com/install.html）に従って行います。
+  - インストール後、Pi4J の jar をプロジェクトのライブラリに追加します。
+- GrovePi-dio と DeviceIO の jar
+  - Raspberry Pi 上にインストールし、生成された jar をプロジェクトに追加します: https://wiki.openjdk.java.net/display/dio/Getting+Started
+  - DIO で実行する場合は、Java 実行時に次のオプションを指定します:
+    - `-Djava.library.path="/home/pi/dio/build/so"`
+    - `-Djava.security.policy="/home/pi/dio/dio.policy"`
 
-Mandatory:
+Maven 依存関係として利用することもできます。
+
+必須依存関係:
 
 ```xml
 <dependency>
@@ -43,7 +50,7 @@ Mandatory:
 </dependency>
 ```
 
-Device Implementation:
+デバイス実装の依存関係（どちらか一方を選択）:
 
 ```xml
 <dependency>
@@ -53,7 +60,7 @@ Device Implementation:
 </dependency>
 ```
 
-OR
+または
 
 ```xml
 <dependency>
@@ -63,38 +70,42 @@ OR
 </dependency>
 ```
 
-Remember to install pi4j or dio.
+いずれの場合も、Pi4J または DeviceIO 本体のインストールを忘れないでください。
 
 ## RUNNING THE EXAMPLES
 
-Examples are provided as a simple netbeans project, this is done to facilitate running it using the remote JVM feature: http://blog.weston-fl.com/configure-netbeans-to-test-and-deploy-raspberry-pi-project/
+サンプルはシンプルな NetBeans プロジェクトとして用意されており、リモート JVM 機能を利用した実行を行いやすくなっています。  
+詳細は `http://blog.weston-fl.com/configure-netbeans-to-test-and-deploy-raspberry-pi-project/` を参照してください。
 
-To run the project provide two parameters:
-- the implementation: pi4j or dio
-- the class to run: 
+プロジェクトを実行する際は、次の 2 つのパラメータを指定します。
 
-You may build the project and copy the examples.jar, GrovePi-spec.jar, GrovePi-pi4j.jar, GrovePi-dio.jar, ( pi4j.jar and/or deviceIo.jar )  
-Then run the examples using all the jars as classpath and the main class: `org.iot.raspberry.examples.Runner`
+- 実装方式: `pi4j` または `dio`
+- 実行するクラス名
+
+ビルド後、`examples.jar`, `GrovePi-spec.jar`, `GrovePi-pi4j.jar`, `GrovePi-dio.jar`（および `pi4j.jar` や `deviceIo.jar`）を 1 か所にまとめます。  
+そのうえで、次のようにすべての jar をクラスパスに含めて実行します。
 
 ```bash
 java -cp lib/* org.iot.raspberry.examples.Runner pi4j BlinkingLed
 ```
 
-All the examples contains instructions on how to connect the devices to the grovepi board.
+各サンプルには、GrovePi ボードへの接続方法が記載されています。
 
-To stop the examples (for those that run eternally)
-- If running directly in the pi enter `quit` in the console.
-- If running remotely using netbeans: run the project again. (first time you run it, starts the project, second time it stops it. (useful since you dont have a console to type to))
+実行を停止したい場合（無限ループするサンプルなど）は次のようにします。
+
+- Raspberry Pi 上で直接実行している場合: コンソールで `quit` と入力
+- NetBeans 経由でリモート実行している場合: プロジェクトをもう一度実行（最初の実行で開始、2 回目の実行で停止 — コンソール入力ができない場合に便利です）
 
 ## STARTING YOUR OWN PROJECT
 
-If using maven use the dependencies above otherwise add the jars to your project.
+Maven を使用する場合は、上記の依存関係を `pom.xml` に追加します。  
+Maven を使わない場合は、必要な jar をプロジェクトに直接追加してください。
 
-Alternatively you may copy all the classes in the GrovePi-Spec project and the deviceIo or Pi4J classes to a new project. (if you want a single jar). Be warned that you still need the pi4j or deviceIO libraries.
+あるいは、GrovePi-Spec プロジェクトと DeviceIO / Pi4J 関連のクラスをすべて新規プロジェクトにコピーして、単一の jar にまとめることもできます（ただし、それでも Pi4J または DeviceIO のライブラリ自体は別途必要です）。
 
 ## USAGE
 
-Simply create a new instance of the GrovePi class with the implementation you want:
+利用したい実装に応じて、`GrovePi` クラスのインスタンスを作成します。
 
 ```java
 GrovePi grovepi = new GrovePi4J();
@@ -102,15 +113,15 @@ GrovePi grovepi = new GrovePi4J();
 GrovePi grovepi = new GrovePiDio();
 ```
 
-Then create the connected devices and provide the grovepi you created as parameter in constructors:
+次に、接続したデバイスを生成し、コンストラクタに先ほどの `grovepi` を渡します。
 
 ```java
 GroveTemperatureAndHumiditySensor dht = new GroveTemperatureAndHumiditySensor(grovePi, 4, GroveTemperatureAndHumiditySensor.Type.DHT11);
 
-// Or for simple digital in or out use
+// 単純なデジタル入出力の場合
 GroveDigitalOut led = grovePi.getDigitalOut(4);
 ```
 
-The number in the parameters is usually the port number you are using.
+コンストラクタの引数に指定する数値は、通常 GrovePi ボード上のポート番号を表します。
 
-*NOTE* YOU MUST NOT CREATE MULTIPLE GrovePi objects! use the same for all the devices connected to your board. using multiple may cause collisions in device access.
+**注意:** GrovePi オブジェクトは必ず 1 つだけにしてください。同じボードに接続された複数のデバイスであっても、単一の GrovePi インスタンスを共有して利用します。複数の GrovePi オブジェクトを作成すると、デバイスアクセスの衝突が発生する可能性があります。

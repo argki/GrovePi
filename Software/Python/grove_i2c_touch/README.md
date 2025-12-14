@@ -1,7 +1,8 @@
 Grove I2C Touch Sensor
 ======================
-Raspberry Pi Python i2c library for Grove I2C Touch sensor (http://www.seeedstudio.com/depot/Grove-I2C-Touch-Sensor-p-840.html)
 
-The I2C Touch Sensor is based on FreeScale MPR121, it feels the touch or proximity of human being fingers. 
+[Grove I2C Touch Sensor](http://www.seeedstudio.com/depot/Grove-I2C-Touch-Sensor-p-840.html) を Raspberry Pi から利用するための Python i2c ライブラリです。
 
-The python library for this sensor is based on the Python library for interfacing with a MPR121 by Adafruit (https://github.com/adafruit/Adafruit_Python_MPR121)
+この I2C タッチセンサーは FreeScale MPR121 をベースとしており、人の指のタッチや近接を検知できます。
+
+このセンサー用の Python ライブラリは、Adafruit による MPR121 用 Python ライブラリ（https://github.com/adafruit/Adafruit_Python_MPR121）をベースにしています。

@@ -1,32 +1,34 @@
-This one is to read RFID card by PN532 through SPI, respond to LED lights(P9813) and a beeper
+このサンプルは、PN532 を SPI 経由で用いて RFID カードを読み取り、その結果に応じて P9813 の LED とブザーを制御するものです。
 
-Input:	PN532(SPI)
-Output:	P9813, GPIO 1 port 
+Input:   PN532 (SPI)
+Output:  P9813、GPIO 1 ポート
 
-NFC module:	http://www.seeedstudio.com/wiki/NFC_Shield_V2.0
+- NFC モジュール:  http://www.seeedstudio.com/wiki/NFC_Shield_V2.0
+- LED ライト:       http://www.seeedstudio.com/wiki/Grove_-_Chainable_RGB_LED
+- ブザー:           http://item.taobao.com/item.htm?spm=0.0.0.0.A0Zkth&id=6859691900
 
-LED light:	http://www.seeedstudio.com/wiki/Grove_-_Chainable_RGB_LED
+概要:
+- NFC から繰り返し読み取りを行い、cardID を使って識別します（現状ではブロック単位の読み取り方法は未実装）。
+- 一致する固定 ID のカードが検出された場合は緑色の光と特定のブザー音を出します。
+- それ以外の場合は赤色の光と別のブザー音を出します。
 
-beeper:		http://item.taobao.com/item.htm?spm=0.0.0.0.A0Zkth&id=6859691900
+このサンプルを動かすには `wiringPi` ライブラリが必要です。
 
+コンパイル:
 
-Outline:
-Repeatedly read from NFC, use cardID to identify,	// currently I don't know how to read the blocks.
-if it matches some fixed number, it shows green light and beepGPIO;
-otherwise, it shows red and beepGPIO another sound.
-
-You need the wiringPi lib.
-
-Compile: 
+```bash
 make
+```
 
-Run:
+実行:
+
+```bash
 sudo ./NFClight
+```
 
+このプロジェクトで利用しているライブラリの作者の方々に感謝します。
 
-Thanks the following persons developed the libs which this project used.
-wiringPi lib from:	Gordons Projects @ https://projects.drogon.net/raspberry-pi/wiringpi/
-nfc lib from:		Katherine @ http://blog.iteadstudio.com/to-drive-itead-pn532-nfc-module-with-raspberry-pi/
+- wiringPi ライブラリ: Gordons Projects — https://projects.drogon.net/raspberry-pi/wiringpi/
+- nfc ライブラリ: Katherine — http://blog.iteadstudio.com/to-drive-itead-pn532-nfc-module-with-raspberry-pi/
 
-This project is created by @DaochenShi (shidaochen@live.com)
-
+このプロジェクトは @DaochenShi（shidaochen@live.com） によって作成されました。

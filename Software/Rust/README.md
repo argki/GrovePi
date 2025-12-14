@@ -1,32 +1,34 @@
 # Rust support for GrovePi
 
 ## Introduction
-Rust Crate support for using GrovePi with Rust.
+GrovePi を Rust から扱うための Rust Crate です。
 
-Examples can be found in the relevant directories as `main.rs`.
-Check them out for usage.
+使い方の例は、各ディレクトリ内の `main.rs` を参照してください。
 
 ## Dependencies
-* Rust version above 1.65 is known to work.
-* The Rust crate [**rppal**](https://github.com/golemparts/rppal) is required and is referenced in the `Cargo.toml` file.
+- Rust バージョン 1.65 以降で動作確認済みです。
+- Rust crate [**rppal**](https://github.com/golemparts/rppal) が必要で、`Cargo.toml` に依存関係として記述されています。
 
 ## Current State
-As the initial state of this module the following features are implemented and tested:
+初期状態として、以下の機能が実装・テストされています。
 
-* Read/write data to I2C slave device [**Grove-LCD RGB Backlight**](https://wiki.seeedstudio.com/Grove-LCD_RGB_Backlight/) V. 4.0 present on ports I2C-1, I2C-2 or I2C-3.
-* Tested on Raspberry Pi 3, Model B and Raspberry Pi, Model B, Rev 2
-  with Raspbian version: September 2022
+- I2C スレーブデバイス [**Grove-LCD RGB Backlight**](https://wiki.seeedstudio.com/Grove-LCD_RGB_Backlight/) v4.0 への読書き（ポート I2C-1 / I2C-2 / I2C-3）
+- Raspberry Pi 3 Model B、および Raspberry Pi Model B Rev 2（Raspbian 2022年9月版）で動作確認済み
 
-## Cross compile for Rasbperry Pi
+## Cross compile for Raspberry Pi
 
-Follow the setup instructions from - (https://github.com/cross-rs/cross)
+Raspberry Pi 向けクロスコンパイルの手順は、`cross` プロジェクトの説明に従ってください。  
+セットアップ手順: https://github.com/cross-rs/cross
 
-Then `cross build --target arm-unknown-linux-gnueabi`.  A pi-ready 
-and transfer the binary (`target/arm-unknown-linux-gnueabi/debug/airq`) to the Pi.
+セットアップ後、次のようにビルドします。
 
-Run the binary `grove_rgb_lcd` on the Pi and observe a couple debug messages and changing colors.
+```bash
+cross build --target arm-unknown-linux-gnueabi
+```
+
+これで Raspberry Pi 上で実行可能なバイナリが `target/arm-unknown-linux-gnueabi/debug/airq` に生成されます。  
+このバイナリを Raspberry Pi に転送し、Pi 上で `grove_rgb_lcd` を実行すると、いくつかのデバッグメッセージと、色の変化が確認できます。
 
 ## Add the module `grove_rgb_lcd` to your projects
 
-Be sure to add the `rppal` dependency to your `Cargo.toml`
-
+自身のプロジェクトに `grove_rgb_lcd` モジュールを追加する場合は、`Cargo.toml` に `rppal` 依存を追加しておく必要があります。

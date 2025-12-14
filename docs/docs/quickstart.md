@@ -25,10 +25,11 @@ Raspbian For Robots イメージを使う利点は、GrovePi が最初からイ�
 一方、クリーンな Raspbian イメージを使う場合は、最初のインストールにやや時間がかかりますが、その後のアップデートは短時間で済みます。  
 この方法のデメリットは、Dexter Industries 製の他のロボット用ソフトウェアが自動では入らないことです。他のロボットを使う予定がない場合は、この方法が向いています。
 
-クリーンな Raspbian イメージに GrovePi をインストールするには、次のコマンドを実行します。
+クリーンな Raspbian イメージに GrovePi をインストールするには、`DexterInd` リポジトリ一式が `pi` ユーザーのホームディレクトリ（例: `~/DexterInd`）に clone 済みであることを前提として、次のコマンドを実行します。
 
 ```bash
-curl -kL dexterindustries.com/update_grovepi | bash
+cd ~/DexterInd/GrovePi/Script
+bash update_grovepi.sh
 ```
 
 #### How to Update to a Newer Version
@@ -36,7 +37,8 @@ curl -kL dexterindustries.com/update_grovepi | bash
 GrovePi をどの方法でインストールした場合でも（手動インストールか Raspbian For Robots かに関わらず）、最新版へアップデートする方法は 1 つだけです。
 
 ```bash
-curl -kL dexterindustries.com/update_grovepi | bash
+cd ~/DexterInd/GrovePi/Script
+bash update_grovepi.sh
 ```
 
 見てのとおり、クリーンな Raspbian へのインストール時と同じコマンドです。
